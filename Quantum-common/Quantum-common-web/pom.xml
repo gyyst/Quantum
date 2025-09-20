@@ -33,10 +33,5 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.dromara.dynamictp</groupId>
-            <artifactId>dynamic-tp-spring-cloud-starter-nacos</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>

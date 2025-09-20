@@ -1,9 +1,9 @@
 package com.lunarstra.quantum.manage.ai.example;
 
-import com.gyyst.boot.base.springbootinit.manage.ai.AiManager;
-import com.gyyst.boot.base.springbootinit.manage.ai.AiTemplate;
-import com.gyyst.boot.base.springbootinit.manage.ai.AiType;
-import com.gyyst.boot.base.springbootinit.manage.ai.impl.qwen.QwenAi;
+import com.lunarstra.quantum.manage.ai.AiManager;
+import com.lunarstra.quantum.manage.ai.AiTemplate;
+import com.lunarstra.quantum.manage.ai.AiType;
+import com.lunarstra.quantum.manage.ai.impl.qwen.QwenAi;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
