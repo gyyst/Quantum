@@ -10,6 +10,18 @@
     </parent>
 
     <artifactId>Quantum-common</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>Quantum-common-ai</module>
+        <module>Quantum-common-cache</module>
+        <module>Quantum-common-core</module>
+        <module>Quantum-common-web</module>
+        <module>Quantum-common-database</module>
+        <module>Quantum-common-dubbo</module>
+        <module>Quantum-common-mail</module>
+        <module>Quantum-common-mq</module>
+        <module>Quantum-common-satoken</module>
+    </modules>
 
 
 </project>
