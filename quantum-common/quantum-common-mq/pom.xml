@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lunarstra.quantum</groupId>
-        <artifactId>Quantum-common</artifactId>
+        <artifactId>quantum-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Quantum-common-mq</artifactId>
+    <artifactId>quantum-common-mq</artifactId>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>

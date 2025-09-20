@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lunarstra.quantum</groupId>
-    <artifactId>Quantum</artifactId>
+    <artifactId>quantum-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Quantum</name>
-    <description>Quantum</description>
+    <name>quantum-parent</name>
+    <description>quantum-parent</description>
     <url/>
     <licenses>
         <license/>
@@ -22,7 +22,7 @@
         <developer/>
     </developers>
     <modules>
-        <module>Quantum-common</module>
+        <module>quantum-common</module>
     </modules>
     <scm>
         <connection/>

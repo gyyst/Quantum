@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lunarstra.quantum</groupId>
-        <artifactId>Quantum-common</artifactId>
+        <artifactId>quantum-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Quantum-common-mail</artifactId>
-
+    <artifactId>quantum-common-ai</artifactId>
+    <packaging>pom</packaging>
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
@@ -18,8 +18,9 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+            <groupId>io.github.pig-mesh.ai</groupId>
+            <artifactId>deepseek-spring-boot-starter</artifactId>
         </dependency>
+
     </dependencies>
 </project>
