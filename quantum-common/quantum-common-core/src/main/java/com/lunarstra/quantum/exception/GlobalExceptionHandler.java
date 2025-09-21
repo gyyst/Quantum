@@ -25,37 +25,37 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public BaseResponse<?> businessExceptionHandler(BusinessException e) {
-        log.error("businessException: " + e.getMessage());
+        log.error("businessException: {}", e.getMessage());
         return BaseResponse.error(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(NotRoleException.class)
     public BaseResponse<?> notRoleExceptionHandler(NotRoleException e) {
-        log.error("notRoleException: " + e.getMessage());
+        log.error("notRoleException: {}", e.getMessage());
         return BaseResponse.error(ErrorCode.NO_AUTH_ERROR);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public BaseResponse<?> IllegalArgumentExceptionHandler(IllegalArgumentException e) {
-        log.error("IllegalArgumentException: " + e.getMessage());
+        log.error("IllegalArgumentException: {}", e.getMessage());
         return BaseResponse.error(ErrorCode.PARAMS_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(NotPermissionException.class)
     public BaseResponse<?> NotPermissionExceptionHandler(NotPermissionException e) {
-        log.error("notPermissionException: " + e.getMessage());
+        log.error("notPermissionException: {}", e.getMessage());
         return BaseResponse.error(ErrorCode.NO_AUTH_ERROR);
     }
 
     @ExceptionHandler(RuntimeException.class)
     public BaseResponse<?> RuntimeExceptionHandler(RuntimeException e) {
-        log.error("RuntimeException: " + e.getMessage());
+        log.error("RuntimeException: {}", e.getMessage());
         return BaseResponse.error(ErrorCode.OPERATION_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public BaseResponse<?> ExceptionHandler(Exception e) {
-        log.error("businessException: " + e.getMessage());
+        log.error("Exception: {}", e.getMessage());
         return BaseResponse.error(ErrorCode.SYSTEM_ERROR);
     }
 
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
             case NotLoginException.KICK_OUT -> "token已被踢下线";
             default -> "当前会话未登录";
         };
-        log.error("notLoginException: " + nle.getMessage());
+        log.error("notLoginException: {}", nle.getMessage());
         // 返回给前端
         return BaseResponse.error(ErrorCode.NOT_LOGIN_ERROR, message);
     }

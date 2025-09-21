@@ -17,6 +17,7 @@ import java.util.Map;
 public class DateUtils {
     private static final String SDFTYPE = "yyyy-MM-dd HH:mm:ss";
 
+
     //    获取本月有多少天
     public static Integer getDay(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -390,14 +391,14 @@ public class DateUtils {
         return true;
     }
 
-    public static void main(String[] args) {
-        try {
-            System.out.println("本周一" + parseDate2String(getThisWeekMonday()));
-            System.out.println("本月一日" + parseDate2String(getFirstDay4ThisMonth()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //    public static void main(String[] args) {
+    //        try {
+    //            System.out.println("本周一" + parseDate2String(getThisWeekMonday()));
+    //            System.out.println("本月一日" + parseDate2String(getFirstDay4ThisMonth()));
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
 
     //    Date转String
     public void test4() {
