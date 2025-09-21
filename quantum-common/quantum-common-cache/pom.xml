@@ -41,17 +41,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot3-starter</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.lunarstra.quantum</groupId>
-            <artifactId>quantum-common-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+
 
     </dependencies>
 </project>

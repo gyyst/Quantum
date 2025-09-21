@@ -18,3 +18,4 @@ spring:
   config:
     import:
       - nacos:${spring.application.name}.yaml?group=${spring.profiles.active}
+      - nacos:quantum-redis.yaml?group=${spring.profiles.active}

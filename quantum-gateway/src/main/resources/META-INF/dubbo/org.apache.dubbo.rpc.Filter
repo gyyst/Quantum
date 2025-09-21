@@ -1,2 +1,0 @@
-dubboConsumerFilter=com.lunarstra.quantum.config.dubbo.DubboConsumerFilter
-dubboProviderFilter=com.lunarstra.quantum.config.dubbo.DubboProviderFilter

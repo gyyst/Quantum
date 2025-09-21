@@ -4,14 +4,13 @@ import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.util.SaResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * [Sa-Token 权限认证] 配置类
  *
  * @author kong
  */
-@Configuration
+//@Configuration
 @Slf4j
 public class SaTokenConfigure {
     // 注册 Sa-Token全局过滤器

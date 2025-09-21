@@ -25,6 +25,7 @@
         <module>quantum-common</module>
         <module>quantum-gateway</module>
         <module>quantum-web</module>
+        <module>quantum-gateway</module>
     </modules>
     <scm>
         <connection/>
@@ -45,7 +46,7 @@
         <satoken.version>1.44.0</satoken.version>
         <knife4j.version>4.5.0</knife4j.version>
         <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
-        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <spring-cloud.version>2025.1.0-M2</spring-cloud.version>
         <docker-java.version>3.6.0</docker-java.version>
         <deepseek4j.verison>1.4.7</deepseek4j.verison>
     </properties>
@@ -66,6 +67,13 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>4.0.0-M2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- 次要依赖 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -151,6 +159,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-redis-template</artifactId>
+                <version>${satoken.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
                 <version>${satoken.version}</version>
             </dependency>
@@ -187,6 +200,8 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -217,6 +232,7 @@
                 <artifactId>deepseek-spring-boot-starter</artifactId>
                 <version>${deepseek4j.verison}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
