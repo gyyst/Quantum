@@ -25,7 +25,6 @@
         <module>quantum-common</module>
         <module>quantum-gateway</module>
         <module>quantum-web</module>
-        <module>quantum-gateway</module>
     </modules>
     <scm>
         <connection/>
@@ -51,11 +50,6 @@
         <deepseek4j.verison>1.4.7</deepseek4j.verison>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

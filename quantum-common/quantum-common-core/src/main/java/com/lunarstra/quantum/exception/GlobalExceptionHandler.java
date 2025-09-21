@@ -77,20 +77,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotLoginException.class)
     public BaseResponse<?> NotLoginExceptionHandler(NotLoginException nle) {
         // 判断场景值，定制化异常信息
-        String message = "";
-        if (nle.getType().equals(NotLoginException.NOT_TOKEN)) {
-            message = "未提供token";
-        } else if (nle.getType().equals(NotLoginException.INVALID_TOKEN)) {
-            message = "token无效";
-        } else if (nle.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
-            message = "token已过期";
-        } else if (nle.getType().equals(NotLoginException.BE_REPLACED)) {
-            message = "token已被顶下线";
-        } else if (nle.getType().equals(NotLoginException.KICK_OUT)) {
-            message = "token已被踢下线";
-        } else {
-            message = "当前会话未登录";
-        }
+        String message = switch (nle.getType()) {
+            case NotLoginException.NOT_TOKEN -> "未提供token";
+            case NotLoginException.INVALID_TOKEN -> "token无效";
+            case NotLoginException.TOKEN_TIMEOUT -> "token已过期";
+            case NotLoginException.BE_REPLACED -> "token已被顶下线";
+            case NotLoginException.KICK_OUT -> "token已被踢下线";
+            default -> "当前会话未登录";
+        };
         log.error("notLoginException: " + nle.getMessage());
         // 返回给前端
         return BaseResponse.error(ErrorCode.NOT_LOGIN_ERROR, message);

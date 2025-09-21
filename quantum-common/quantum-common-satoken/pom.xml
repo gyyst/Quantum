@@ -8,7 +8,7 @@
         <artifactId>quantum-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
+    <version>0.0.1-SNAPSHOT</version>
     <artifactId>quantum-common-satoken</artifactId>
 
     <properties>
@@ -36,6 +36,7 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dubbo3</artifactId>
         </dependency>
+        <!--        todo 等待satoken修复BUG-->
         <!--        <dependency>-->
         <!--            <groupId>cn.dev33</groupId>-->
         <!--            <artifactId>sa-token-alone-redis</artifactId>-->
