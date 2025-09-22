@@ -10,11 +10,18 @@ spring:
       username: nacos
       password: mynacos2025
       discovery:
-        namespace: 21c93e81-e4b2-4c8d-860c-97c94a474a0e
+        namespace: Quantum
         group: ${spring.profiles.active}
       config:
         server-addr: 10.243.49.127:8848
         password: mynacos2025
+        namespace: Quantum
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
   config:
     import:
       - nacos:${spring.application.name}.yaml?group=${spring.profiles.active}
