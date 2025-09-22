@@ -8,10 +8,8 @@
         <artifactId>quantum-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <artifactId>quantum-common-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>

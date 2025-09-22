@@ -17,7 +17,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LockUtil {
     @Resource
     private RedissonClient redissonClient;
-
     private ReentrantLock reentrantLock;
 
     /**
@@ -37,9 +36,8 @@ public class LockUtil {
                 lock.unlock();
             }
         } else {
-            if (failLock != null) {
+            if (failLock != null)
                 failLock.run();
-            }
         }
     }
 
@@ -97,9 +95,8 @@ public class LockUtil {
                 lock.unlock();
             }
         } else {
-            if (failLock != null) {
+            if (failLock != null)
                 failLock.run();
-            }
 
         }
         return failValue;

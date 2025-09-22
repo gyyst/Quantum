@@ -2,6 +2,7 @@ package com.lunarstra.quantum.common;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -12,6 +13,9 @@ import java.io.Serializable;
  */
 @Data
 public class BaseResponse<T> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -2128759716127032386L;
 
     private int code;
 
@@ -60,7 +64,7 @@ public class BaseResponse<T> implements Serializable {
      * @param errorCode
      * @return
      */
-    public static BaseResponse error(ErrorCode errorCode) {
+    public static <T> BaseResponse<T> error(ErrorCode errorCode) {
         return new BaseResponse<>(errorCode);
     }
 
@@ -71,7 +75,7 @@ public class BaseResponse<T> implements Serializable {
      * @param message
      * @return
      */
-    public static BaseResponse error(int code, String message) {
+    public static <T> BaseResponse<T> error(int code, String message) {
         return new BaseResponse(code, null, message);
     }
 
@@ -81,7 +85,7 @@ public class BaseResponse<T> implements Serializable {
      * @param errorCode
      * @return
      */
-    public static BaseResponse error(ErrorCode errorCode, String message) {
-        return new BaseResponse(errorCode.getCode(), null, message);
+    public static <T> BaseResponse<T> error(ErrorCode errorCode, String message) {
+        return new BaseResponse<>(errorCode.getCode(), null, message);
     }
 }

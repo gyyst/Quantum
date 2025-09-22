@@ -10,17 +10,18 @@
     </parent>
 
     <artifactId>quantum-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>quantum-common-ai</module>
-        <module>quantum-common-cache</module>
         <module>quantum-common-core</module>
         <module>quantum-common-web</module>
-        <module>quantum-common-database</module>
         <module>quantum-common-dubbo</module>
+        <module>quantum-common-cache</module>
+        <module>quantum-common-database</module>
         <module>quantum-common-mail</module>
         <module>quantum-common-mq</module>
         <module>quantum-common-satoken</module>
+        <module>quantum-common-ai</module>
     </modules>
 
 

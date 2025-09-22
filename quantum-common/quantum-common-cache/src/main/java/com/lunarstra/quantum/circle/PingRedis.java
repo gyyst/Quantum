@@ -17,7 +17,7 @@ public class PingRedis {
     @Resource
     private RedisCache redisCache;
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void pingRedis() {
         redisCache.setCacheObject("ping", "ping", 1, TimeUnit.MINUTES);
     }

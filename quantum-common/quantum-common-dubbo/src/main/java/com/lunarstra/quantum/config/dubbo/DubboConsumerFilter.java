@@ -32,5 +32,4 @@ public class DubboConsumerFilter implements Filter {
         // 开始调用
         return invoker.invoke(invocation);
     }
-
 }
