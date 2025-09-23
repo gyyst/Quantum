@@ -2,7 +2,9 @@ package com.lunarstra.quantum.config;
 
 import cn.hutool.core.util.IdUtil;
 import com.lunarstra.quantum.constant.system.SystemConstant;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -15,13 +17,13 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class LogGlobalFilter implements GlobalFilter, Ordered {
-//    @Value("${plainKey}")
-//    String testKey;
-//
-//    @PostConstruct
-//    public void init() {
-//        log.info("plainKey:{}", testKey);
-//    }
+    @Value("${dubbo.application.logger}")
+    String testKey;
+
+    @PostConstruct
+    public void init() {
+        log.info("testKey:{}", testKey);
+    }
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request;

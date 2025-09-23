@@ -35,5 +35,13 @@
             <artifactId>sa-token-spring-boot3-starter</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-config-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-native</artifactId>
+        </dependency>
     </dependencies>
 </project>
