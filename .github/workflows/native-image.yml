@@ -49,3 +49,4 @@ jobs:
         run: |
           cd quantum-gateway/target
           ls
+          ./quantum-gateway
