@@ -173,19 +173,6 @@
                             <imageName>${project.artifactId}</imageName>
                             <!-- mainClass用于指定main方法类路径 -->
                             <mainClass>com.lunarstra.quantum.QuantumGateway5000</mainClass>
-                            <buildArgs>
-                                <buildArg>--no-fallback</buildArg>
-                                <buildArg>--install-exit-handlers</buildArg>
-                                <buildArg>--enable-url-protocols=http,https</buildArg>
-                                <buildArg>--enable-monitoring=heapdump</buildArg>
-                                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
-                                <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
-                                <buildArg>--initialize-at-build-time=org.springframework.boot.loader.nio.file.NestedFileSystemProvider</buildArg>
-                                <buildArg>--initialize-at-build-time=org.apache.dubbo.common.logger.LoggerFactory</buildArg>
-                                <buildArg>--initialize-at-run-time=org.springframework</buildArg>
-                                <buildArg>--initialize-at-build-time=org.apache.dubbo.common.logger.log4j2.Log4j2LoggerAdapter</buildArg>
-                            </buildArgs>
-
                         </configuration>
                         <executions>
                             <execution>

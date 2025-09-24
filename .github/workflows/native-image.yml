@@ -1,0 +1,51 @@
+name: Native Image Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-native-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '25'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: chmod
+        run: chmod +x ./mvnw
+
+      - name: Build native image
+        run: |
+          ./mvnw clean package
+          ./mvnw -f quantum-gateway/pom.xml -Pnative native:compile-no-fork
+
+      - name: Upload Native Image Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantum-gateway-native-image
+          path: quantum-gateway/target/quantum-gateway
+
+      - name: Test Native Image
+        run: |
+          cd quantum-gateway/target
+          ls
