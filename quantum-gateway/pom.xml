@@ -175,6 +175,12 @@
                             <!-- mainClass用于指定main方法类路径 -->
                             <mainClass>com.lunarstra.quantum.QuantumGateway5000</mainClass>
                             <buildArgs>
+                                <buildArg>--no-fallback</buildArg>
+                                <buildArg>--install-exit-handlers</buildArg>
+                                <buildArg>--enable-url-protocols=http,https</buildArg>
+                                <buildArg>--enable-monitoring=heapdump</buildArg>
+                                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                                <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                                 <buildArg>--initialize-at-build-time=com.alibaba.fastjson2</buildArg>
                             </buildArgs>
                         </configuration>
