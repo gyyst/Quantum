@@ -1,6 +1,5 @@
 package com.lunarstra.quantum.config.dubbo;
 
-import cn.dev33.satoken.same.SaSameUtil;
 import com.lunarstra.quantum.constant.system.SystemConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.constants.CommonConstants;
