@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class LogGlobalFilter implements GlobalFilter, Ordered {
+public class AppendGlobalLogFilter implements GlobalFilter, Ordered {
     @Value("${dubbo.application.logger}")
     String testKey;
 

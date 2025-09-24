@@ -22,8 +22,6 @@ public class DubboConsumerFilter implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        // 追加 Same-Token 参数
-        RpcContext.getClientAttachment().setAttachment(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken());
         // 追加全链路日志调用
         log.info("DubboConsumerFilter:{}", MDC.get(SystemConstant.TRACE_ID));
         RpcContext.getClientAttachment().setAttachment(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));
