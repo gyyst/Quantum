@@ -68,36 +68,11 @@
                         <buildArg>--enable-url-protocols=http,https</buildArg>
                         <buildArg>--enable-monitoring=heapdump</buildArg>
                         <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                        <buildArg>-H:+SharedArenaSupport</buildArg>
                         <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                         <buildArg>--initialize-at-build-time=com.alibaba.fastjson2</buildArg>
                         <buildArg>--initialize-at-build-time=org.springframework</buildArg>
                         <buildArg>--initialize-at-build-time=org.apache.dubbo</buildArg>
-<!--                        <buildArg>&#45;&#45;initialize-at-run-time=org.springframework</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=org.apache.dubbo.common.logger.log4j2.Log4j2LoggerAdapter</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=org.apache.dubbo.common.logger.Level</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.JSONFactory$CacheItem</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.reader.ObjectReaderImplString</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.reader.ObjectReaderBaseModule</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.JSONReader$Context</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.util.TypeUtils$Cache</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.reader.ObjectReaderProvider$LRUAutoTypeCache</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.writer.ObjectWriterBaseModule</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.writer.ObjectWriterBaseModule$WriterAnnotationProcessor</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToDouble</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToShort</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToInteger</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToBigInteger</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToBigDecimal</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToBoolean</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToByte</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToDouble</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToFloat</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToLong</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToNumber</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.ToString</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.util.ParameterizedTypeImpl</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.reader.ObjectReaderBaseModule$ReaderAnnotationProcessor</buildArg>-->
-<!--                        <buildArg>&#45;&#45;initialize-at-build-time=com.alibaba.fastjson2.function.impl.StringToAny</buildArg>-->
                     </buildArgs>
 
                 </configuration>
@@ -169,6 +144,7 @@
                                 <buildArg>--enable-monitoring=heapdump</buildArg>
                                 <buildArg>-H:+ReportExceptionStackTraces</buildArg>
                                 <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
+                                <buildArg>-H:+SharedArenaSupport</buildArg>
                                 <buildArg>--initialize-at-build-time=com.alibaba.fastjson2</buildArg>
                             </buildArgs>
                         </configuration>
