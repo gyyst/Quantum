@@ -17,13 +17,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class AppendGlobalLogFilter implements GlobalFilter, Ordered {
-    @Value("${dubbo.application.logger}")
-    String testKey;
 
-    @PostConstruct
-    public void init() {
-        log.info("testKey:{}", testKey);
-    }
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request;

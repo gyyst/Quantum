@@ -12,10 +12,11 @@ spring:
       discovery:
         namespace: Quantum
         group: ${spring.profiles.active}
+        server-addr: 10.243.49.127:8848
       config:
         server-addr: 10.243.49.127:8848
         password: mynacos2025
-        namespace: Quantum
+        namespace: nacos
     gateway:
       server:
         webflux:

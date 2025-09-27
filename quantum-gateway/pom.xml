@@ -41,18 +41,6 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.lunarstra.quantum</groupId>
-            <artifactId>quantum-common-satoken</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>cn.dev33</groupId>
-                    <artifactId>sa-token-spring-boot3-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>com.lunarstra.quantum</groupId>
             <artifactId>quantum-common-dubbo</artifactId>

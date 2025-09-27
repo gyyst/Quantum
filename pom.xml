@@ -49,6 +49,7 @@
         <docker-java.version>3.6.0</docker-java.version>
         <deepseek4j.version>1.4.7</deepseek4j.version>
         <fastjson2.version>2.0.59</fastjson2.version>
+        <nacos.version>3.1.0</nacos.version>
     </properties>
     <dependencies>
         <dependency>
@@ -244,6 +245,12 @@
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
