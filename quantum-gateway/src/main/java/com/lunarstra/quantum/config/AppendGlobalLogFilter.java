@@ -2,9 +2,7 @@ package com.lunarstra.quantum.config;
 
 import cn.hutool.core.util.IdUtil;
 import com.lunarstra.quantum.constant.system.SystemConstant;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;

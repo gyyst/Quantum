@@ -1,4 +1,3 @@
-server.port: 5000
 spring:
   application:
     name: quantum-gateway
@@ -10,21 +9,15 @@ spring:
       server-addr: 10.243.49.127:8848
       username: nacos
       password: mynacos2025
+      namespace: Quantum
       discovery:
-        namespace: Quantum
+        namespace: ${spring.cloud.nacos.namespace}
         group: ${spring.profiles.active}
-        server-addr: 10.243.49.127:8848
       config:
-        server-addr: 10.243.49.127:8848
-        password: mynacos2025
-        namespace: nacos
-    gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
+        namespace: ${spring.cloud.nacos.namespace}
+        group: ${spring.profiles.active}
+
   config:
     import:
-      - nacos:${spring.application.name}.yaml?group=${spring.profiles.active}
-      - nacos:quantum-redis.yaml?group=${spring.profiles.active}
+      - optional:nacos:${spring.application.name}.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-redis.yaml?group=${spring.profiles.active}&refreshEnabled=true
