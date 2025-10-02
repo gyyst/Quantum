@@ -2,8 +2,6 @@ package com.lunarstra.quantum.config;
 
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,8 +63,4 @@ public class SpringMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(logInterceptor).addPathPatterns("/**").excludePathPatterns("/doc.html", "/v3/api-docs");
     }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    }
 }

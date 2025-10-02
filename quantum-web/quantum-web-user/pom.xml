@@ -5,27 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lunarstra.quantum</groupId>
-        <artifactId>quantum-common</artifactId>
+        <artifactId>quantum-web</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quantum-common-dubbo</artifactId>
+    <artifactId>quantum-web-user</artifactId>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.lunarstra.quantum</groupId>
-            <artifactId>quantum-lib-dubbo</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lunarstra.quantum</groupId>
-            <artifactId>quantum-common-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+
 </project>

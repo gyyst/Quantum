@@ -1,6 +1,6 @@
 spring:
   application:
-    name: quantum-gateway
+    name: quantum-web-user
   #profiles默认为dev
   profiles:
     active: dev

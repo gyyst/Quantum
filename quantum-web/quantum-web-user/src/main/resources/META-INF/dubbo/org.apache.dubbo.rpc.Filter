@@ -1,0 +1,2 @@
+dubboConsumerFilter=com.gyyst.insight.config.dubbo.DubboConsumerFilter
+dubboProviderFilter=com.gyyst.insight.config.dubbo.DubboProviderFilter
