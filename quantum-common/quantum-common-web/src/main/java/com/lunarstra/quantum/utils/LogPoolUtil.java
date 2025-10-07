@@ -1,6 +1,5 @@
 package com.lunarstra.quantum.utils;
 
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Callable;
@@ -15,8 +14,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Component
 public class LogPoolUtil {
-    @Resource
-    private ThreadPoolExecutor LOG_RECORD_POOL;
+
+    private static final ThreadPoolExecutor LOG_RECORD_POOL = null;
 
     public void log(Runnable r) {
         LOG_RECORD_POOL.submit(r);

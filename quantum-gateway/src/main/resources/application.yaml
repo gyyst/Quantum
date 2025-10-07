@@ -6,7 +6,7 @@ spring:
     active: dev
   cloud:
     nacos:
-      server-addr: 47.96.82.135:8848
+      server-addr: 10.243.49.127:8848
       username: nacos
       password: mynacos2025
       namespace: Quantum
