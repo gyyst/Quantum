@@ -1,0 +1,45 @@
+name: Build JAR Packages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-jar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '25'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: chmod
+        run: chmod +x ./mvnw
+
+
+      - name: Build quantum modules
+        run: |
+          ./mvnw clean package install -f pom.xml -Dmaven.test.skip=true
+
+      - name: Upload quantum-gateway JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantum-gateway-jar
+          path: quantum-gateway/target/*.jar
+
+      - name: Upload quantum-web-user JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantum-web-user-jar
+          path: quantum-web/quantum-web-user/target/*.jar
