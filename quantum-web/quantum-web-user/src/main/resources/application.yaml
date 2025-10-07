@@ -13,7 +13,10 @@ spring:
       discovery:
         namespace: ${spring.cloud.nacos.namespace}
         group: ${spring.profiles.active}
+      config:
+        namespace: ${spring.cloud.nacos.namespace}
   config:
     import:
       - optional:nacos:${spring.application.name}.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-redis.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-web.yaml?group=${spring.profiles.active}&refreshEnabled=true

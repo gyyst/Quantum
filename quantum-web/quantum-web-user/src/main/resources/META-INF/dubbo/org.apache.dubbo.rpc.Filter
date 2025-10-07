@@ -1,2 +1,2 @@
-dubboConsumerFilter=com.gyyst.insight.config.dubbo.DubboConsumerFilter
-dubboProviderFilter=com.gyyst.insight.config.dubbo.DubboProviderFilter
+dubboConsumerFilter=com.lunarstra.quantum.config.dubbo.DubboConsumerFilter
+dubboProviderFilter=com.lunarstra.quantum.config.dubbo.DubboProviderFilter
