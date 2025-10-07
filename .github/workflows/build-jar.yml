@@ -1,6 +1,7 @@
 name: Build JAR Packages
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:
@@ -24,13 +25,20 @@ jobs:
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
       - name: chmod
         run: chmod +x ./mvnw
 
 
       - name: Build quantum modules
         run: |
-          ./mvnw clean package install -f pom.xml -Dmaven.test.skip=true
+          ./mvnw clean package -Dmaven.test.skip=true
 
       - name: Upload quantum-gateway JAR
         uses: actions/upload-artifact@v4
