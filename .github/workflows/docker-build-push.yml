@@ -6,7 +6,7 @@ on:
       tag:
         description: 'Docker image tag'
         required: true
-        default: 'latest'
+        default: 'dev'
   push:
     branches: [ "main" ]
     tags: [ "v*.*.*" ]
@@ -62,6 +62,7 @@ jobs:
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ github.event.inputs.tag || 'dev' }}
             type=sha
 
       - name: Build and push gateway image
@@ -84,6 +85,7 @@ jobs:
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ github.event.inputs.tag || 'dev' }}
             type=sha
 
       - name: Build and push user service image
@@ -146,6 +148,7 @@ jobs:
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ github.event.inputs.tag || 'dev' }}
             type=sha
 
       - name: Build and push combined image
