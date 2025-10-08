@@ -21,3 +21,4 @@ spring:
     import:
       - optional:nacos:${spring.application.name}.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-redis.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-satoken.yaml?group=${spring.profiles.active}&refreshEnabled=true
