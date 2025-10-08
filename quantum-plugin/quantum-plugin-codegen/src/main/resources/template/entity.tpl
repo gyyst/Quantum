@@ -3,8 +3,12 @@
 #set(swaggerVersion = entityConfig.getSwaggerVersion())
 #set(withActiveRecord = entityConfig.isWithActiveRecord())
 #set(entityClassName = table.buildEntityClassName())
+#set(jdkVersion = entityConfig.getJdkVersion())
 package #(packageConfig.entityPackage);
 
+#if(jdkVersion >= 14)
+import java.io.Serial;
+#end
 import com.mybatisflex.core.handler.JacksonTypeHandler;
 #for(importClass : table.buildImports(isBase))
 import #(importClass);
@@ -58,6 +62,11 @@ import lombok.NoArgsConstructor;
 #end
 #(table.buildTableAnnotation())
 public class #(entityClassName)#if(withActiveRecord) extends Model<#(entityClassName)>#else#(table.buildExtends(isBase))#(table.buildImplements())#end  {
+
+    #if(jdkVersion >= 14)
+    @Serial
+    #end
+    private static final long serialVersionUID = -1L;
 
 #for(column : table.columns)
     #set(comment = javadocConfig.formatColumnComment(column.comment))

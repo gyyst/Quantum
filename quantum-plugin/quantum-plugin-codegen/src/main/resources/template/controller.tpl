@@ -107,7 +107,7 @@ public class #(table.buildControllerClassName()) #if(controllerConfig.superClass
     /**
      * 根据主键更新#(tableComment)。
      *
-     * @param update#(entityClassName)request #(tableComment)修改请求类
+     * @param update#(entityClassName)Request #(tableComment)修改请求类
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")

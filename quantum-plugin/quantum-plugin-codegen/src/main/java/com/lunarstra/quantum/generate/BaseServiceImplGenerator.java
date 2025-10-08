@@ -1,10 +1,8 @@
 package com.lunarstra.quantum.generate;
 
-import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.PackageConfig;
-import com.mybatisflex.codegen.dialect.JdbcTypeMapping;
 import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.codegen.generator.IGenerator;
 
@@ -12,40 +10,21 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityGenerator implements IGenerator {
-    /**
-     * 设置类型映射
-     */
-    private static void registerType() {
-        JdbcTypeMapping.setTypeMapper((_, _, column) -> {
-            if (column.getName().equals("isDelete")) {
-                return Boolean.class.getName();
-            }
-
-            return null;
-        });
-    }
+public class BaseServiceImplGenerator implements IGenerator {
 
     @Override
     public String getTemplatePath() {
-        return "/template/entity.tpl";
+        return "template/baseServiceImpl.tpl";
     }
 
     @Override
-    public void setTemplatePath(String templatePath) {
+    public void setTemplatePath(String s) {
 
     }
 
     @Override
     public void generate(Table table, GlobalConfig globalConfig) {
-        registerType();
-        table.getColumns().forEach(column -> {
-            if (column.isPrimaryKey() && !column.getAutoIncrement()) {
 
-                column.getColumnConfig().setKeyType(KeyType.Generator);
-                column.getColumnConfig().setKeyValue(MyKeyGenerators.UID);
-            }
-        });
         if (!globalConfig.isEntityGenerateEnable()) {
             return;
         }
@@ -53,9 +32,9 @@ public class EntityGenerator implements IGenerator {
         PackageConfig packageConfig = globalConfig.getPackageConfig();
         EntityConfig entityConfig = globalConfig.getEntityConfig();
 
-        String entityPackagePath = packageConfig.getEntityPackage().replace(".", "/");
+        String entityPackagePath = (packageConfig.getBasePackage() + ".service.base").replace(".", "/");
         File entityJavaFile = new File(packageConfig.getSourceDir(),
-            entityPackagePath + "/" + table.buildEntityClassName() + ".java");
+            entityPackagePath + "/" + "Base" + table.buildEntityClassName() + "Service" + ".java");
 
         if (entityJavaFile.exists() && !entityConfig.isOverwriteEnable()) {
             return;
@@ -66,6 +45,7 @@ public class EntityGenerator implements IGenerator {
         params.put("entityConfig", entityConfig);
         params.put("packageConfig", packageConfig);
         params.put("javadocConfig", globalConfig.getJavadocConfig());
+        params.put("serviceImplConfig", globalConfig.getServiceImplConfig());
         params.put("isBase", false);
 
         globalConfig.getTemplateConfig().getTemplate().generate(params, getTemplatePath(), entityJavaFile);

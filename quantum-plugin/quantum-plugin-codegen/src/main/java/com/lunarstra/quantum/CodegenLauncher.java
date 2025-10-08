@@ -1,6 +1,7 @@
 package com.lunarstra.quantum;
 
 import com.lunarstra.quantum.generate.AddRequestGenerator;
+import com.lunarstra.quantum.generate.BaseServiceImplGenerator;
 import com.lunarstra.quantum.generate.ConverterGenerator;
 import com.lunarstra.quantum.generate.EntityGenerator;
 import com.lunarstra.quantum.generate.RepositoryGenerator;
@@ -93,12 +94,14 @@ public class CodegenLauncher {
     }
 
     public static GlobalConfig createGlobalConfigUseStyle1() {
+
         GeneratorFactory.registerGenerator("addRequest", new AddRequestGenerator());
         GeneratorFactory.registerGenerator("updateRequest", new UpdateRequestGenerator());
         GeneratorFactory.registerGenerator("response", new ResponseGenerator());
         GeneratorFactory.registerGenerator("converter", new ConverterGenerator());
         GeneratorFactory.registerGenerator("entity", new EntityGenerator());
         GeneratorFactory.registerGenerator("repository", new RepositoryGenerator());
+        GeneratorFactory.registerGenerator("baseServiceImpl", new BaseServiceImplGenerator());
         // 创建配置内容
         GlobalConfig globalConfig = new GlobalConfig();
         // 设置根包
