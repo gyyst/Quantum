@@ -26,6 +26,7 @@
         <module>quantum-gateway</module>
         <module>quantum-web</module>
         <module>quantum-lib</module>
+        <module>quantum-plugin</module>
     </modules>
     <scm>
         <connection/>
