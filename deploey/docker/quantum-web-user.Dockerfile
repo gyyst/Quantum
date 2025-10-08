@@ -1,5 +1,5 @@
-# 使用官方 OpenJDK 镜像作为基础镜像
-FROM openjdk:25-jdk-slim
+# 使用亚马逊 OpenJDK 镜像作为基础镜像
+FROM amazoncorretto:25-alpine
 
 # 设置维护者信息
 LABEL maintainer="Quantum Team"
