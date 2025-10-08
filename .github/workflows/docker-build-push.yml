@@ -56,7 +56,7 @@ jobs:
         id: meta-gateway
         uses: docker/metadata-action@v5
         with:
-          images: lunarstra/quantum-gateway
+          images: gyyst/quantum-gateway
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -78,7 +78,7 @@ jobs:
         id: meta-user
         uses: docker/metadata-action@v5
         with:
-          images: lunarstra/quantum-user
+          images: gyyst/quantum-user
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -140,7 +140,7 @@ jobs:
         id: meta-combined
         uses: docker/metadata-action@v5
         with:
-          images: lunarstra/quantum-all
+          images: gyyst/quantum-all
           tags: |
             type=ref,event=branch
             type=ref,event=pr
