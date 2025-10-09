@@ -2,12 +2,13 @@
 #set(entityClassName = table.buildEntityClassName())
 #set(entityVarName = firstCharToLowerCase(entityClassName))
 #set(serviceVarName = firstCharToLowerCase(table.buildServiceClassName()))
+#set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.controllerPackage);
 
-import com.lunarstra.quantum.common.BaseResponse;
-import com.lunarstra.quantum.common.PageRequest;
-import com.lunarstra.quantum.annotation.RedisLimit;
-import com.lunarstra.quantum.constant.LimitType;
+import #(basePackage).common.BaseResponse;
+import #(basePackage).common.PageRequest;
+import #(basePackage).annotation.RedisLimit;
+import #(basePackage).constant.LimitType;
 import com.mybatisflex.core.paginate.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -117,8 +118,8 @@ public class #(table.buildControllerClassName()) #if(controllerConfig.superClass
     #if(withSwagger && swaggerVersion.getName() == "DOC")
     @Operation(summary = "根据主键更新#(tableComment)",description="根据主键更新#(tableComment)")
     #end
-    public BaseResponse<Boolean> update(@RequestBody @Validated #if(withSwagger && swaggerVersion.getName() == "FOX")@ApiParam("#(tableComment)主键") #end #if(withSwagger && swaggerVersion.getName() == "DOC")@Parameter(description="#(tableComment)主键")#end Update#(entityClassName)Request update#(entityClassName)request) {
-        return BaseResponse.success(#(serviceVarName).updateById(update#(entityClassName)request));
+    public BaseResponse<Boolean> update(@RequestBody @Validated #if(withSwagger && swaggerVersion.getName() == "FOX")@ApiParam("#(tableComment)主键") #end #if(withSwagger && swaggerVersion.getName() == "DOC")@Parameter(description="#(tableComment)主键")#end Update#(entityClassName)Request update#(entityClassName)Request) {
+        return BaseResponse.success(#(serviceVarName).updateById(update#(entityClassName)Request));
     }
 
     /**

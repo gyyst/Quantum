@@ -11,6 +11,7 @@ import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.ColumnConfig;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
+import com.mybatisflex.codegen.dialect.JdbcTypeMapping;
 import com.mybatisflex.codegen.generator.GeneratorFactory;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class CodegenLauncher {
 
-    private static Map<String, HikariDataSource> dataSourceHashMap = new HashMap<>();
+    private static final Map<String, HikariDataSource> dataSourceHashMap = new HashMap<>();
 
     static {
         // user
@@ -93,8 +94,21 @@ public class CodegenLauncher {
         generator.generate();
     }
 
-    public static GlobalConfig createGlobalConfigUseStyle1() {
+    /**
+     * 设置类型映射
+     */
+    private static void registerType() {
+        JdbcTypeMapping.setTypeMapper((_, _, column) -> {
+            if (column.getName().equals("is_delete")) {
+                return Boolean.class.getName();
+            }
 
+            return null;
+        });
+    }
+
+    public static GlobalConfig createGlobalConfigUseStyle1() {
+        registerType();
         GeneratorFactory.registerGenerator("addRequest", new AddRequestGenerator());
         GeneratorFactory.registerGenerator("updateRequest", new UpdateRequestGenerator());
         GeneratorFactory.registerGenerator("response", new ResponseGenerator());

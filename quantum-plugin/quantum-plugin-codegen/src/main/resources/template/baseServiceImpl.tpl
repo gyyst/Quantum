@@ -2,18 +2,19 @@
 #set(isCacheExample = serviceImplConfig.cacheExample)
 #set(primaryKey = table.getPrimaryKey())
 #set(entityClassName = table.buildEntityClassName())
+#set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.serviceImplPackage);
 
-import com.lunarstra.quantum.common.PageRequest;
-import com.lunarstra.quantum.model.converter.#(entityClassName)Converter;
-import com.lunarstra.quantum.model.request.Add#(entityClassName)Request;
+import #(basePackage).common.PageRequest;
+import #(basePackage).model.converter.#(entityClassName)Converter;
+import #(basePackage).model.request.Add#(entityClassName)Request;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import com.lunarstra.quantum.model.request.Update#(entityClassName)Request;
-import com.lunarstra.quantum.model.response.#(entityClassName)Response;
-import com.lunarstra.quantum.repository.#(entityClassName)Repository;
+import #(basePackage).model.request.Update#(entityClassName)Request;
+import #(basePackage).model.response.#(entityClassName)Response;
+import #(basePackage).repository.#(entityClassName)Repository;
 
 import jakarta.annotation.Resource;
 import java.io.Serializable;

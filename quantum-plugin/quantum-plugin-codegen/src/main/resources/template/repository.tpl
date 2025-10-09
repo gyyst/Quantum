@@ -1,9 +1,10 @@
 #set(tableComment = table.getComment())
 #set(primaryKey = table.getPrimaryKey())
 #set(entityClassName = table.buildEntityClassName())
+#set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.entityPackage);
 
-import com.lunarstra.quantum.common.PageRequest;
+import #(basePackage).common.PageRequest;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;

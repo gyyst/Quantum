@@ -3,6 +3,7 @@
 #set(swaggerVersion = entityConfig.getSwaggerVersion())
 #set(withActiveRecord = entityConfig.isWithActiveRecord())
 #set(entityClassName = table.buildEntityClassName())
+#set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.entityPackage);
 
 import com.mybatisflex.core.handler.JacksonTypeHandler;

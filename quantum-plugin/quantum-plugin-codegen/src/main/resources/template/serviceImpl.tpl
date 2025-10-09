@@ -2,11 +2,14 @@
 #set(isCacheExample = serviceImplConfig.cacheExample)
 #set(primaryKey = table.getPrimaryKey())
 #set(entityClassName = table.buildEntityClassName())
+#set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.serviceImplPackage);
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
-import com.lunarstra.quantum.service.base.Base#(table.buildServiceImplClassName());
+import #(basePackage).service.base.Base#(table.buildServiceImplClassName());
+import #(basePackage).repository.#(entityClassName)Repository;
 
 import org.springframework.stereotype.Service;
 #if(isCacheExample)

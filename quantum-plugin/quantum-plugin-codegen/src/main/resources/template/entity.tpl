@@ -4,6 +4,7 @@
 #set(withActiveRecord = entityConfig.isWithActiveRecord())
 #set(entityClassName = table.buildEntityClassName())
 #set(jdkVersion = entityConfig.getJdkVersion())
+#set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.entityPackage);
 
 #if(jdkVersion >= 14)

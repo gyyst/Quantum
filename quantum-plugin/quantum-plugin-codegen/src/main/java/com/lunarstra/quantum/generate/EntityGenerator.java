@@ -4,7 +4,6 @@ import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.PackageConfig;
-import com.mybatisflex.codegen.dialect.JdbcTypeMapping;
 import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.codegen.generator.IGenerator;
 
@@ -13,18 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EntityGenerator implements IGenerator {
-    /**
-     * 设置类型映射
-     */
-    private static void registerType() {
-        JdbcTypeMapping.setTypeMapper((_, _, column) -> {
-            if (column.getName().equals("isDelete")) {
-                return Boolean.class.getName();
-            }
-
-            return null;
-        });
-    }
 
     @Override
     public String getTemplatePath() {
@@ -38,7 +25,7 @@ public class EntityGenerator implements IGenerator {
 
     @Override
     public void generate(Table table, GlobalConfig globalConfig) {
-        registerType();
+
         table.getColumns().forEach(column -> {
             if (column.isPrimaryKey() && !column.getAutoIncrement()) {
 
