@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Gateway服务
+  quantum-gateway:
+    image: gyyst/quantum-gateway:latest
+    container_name: quantum_gateway
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=proc
+
+  # 用户服务
+  quantum-user:
+    image: gyyst/quantum-user:latest
+    container_name: quantum_user
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=proc

@@ -68,7 +68,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./deploey/docker/quantum-gateway.Dockerfile
+          file: ./deploey/build/quantum-gateway.Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-gateway.outputs.tags }}
@@ -90,7 +90,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./deploey/docker/quantum-web-user.Dockerfile
+          file: ./deploey/build/quantum-web-user.Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-user.outputs.tags }}
@@ -152,7 +152,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./deploey/docker/quantum-all.Dockerfile
+          file: ./deploey/build/quantum-all.Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-combined.outputs.tags }}
