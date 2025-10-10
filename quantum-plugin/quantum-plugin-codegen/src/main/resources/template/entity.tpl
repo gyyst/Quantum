@@ -36,7 +36,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 #end
 #end
-
+#if(hasText((buildImports)))
+#(buildImports)
+#end
 /**
  * #(table.getComment()) 实体类。
  *

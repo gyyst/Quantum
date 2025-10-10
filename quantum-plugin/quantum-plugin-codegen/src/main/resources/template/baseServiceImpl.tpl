@@ -10,7 +10,6 @@ import #(basePackage).model.converter.#(entityClassName)Converter;
 import #(basePackage).model.request.Add#(entityClassName)Request;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
 import #(basePackage).model.request.Update#(entityClassName)Request;
 import #(basePackage).model.response.#(entityClassName)Response;
 import #(basePackage).repository.#(entityClassName)Repository;
@@ -18,11 +17,6 @@ import #(basePackage).repository.#(entityClassName)Repository;
 import jakarta.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
-
-
-import #(serviceImplConfig.buildSuperClassImport());
-import #(packageConfig.entityPackage).#(table.buildEntityClassName());
-import #(packageConfig.mapperPackage).#(table.buildMapperClassName());
 
 #if(isCacheExample)
 import com.mybatisflex.core.paginate.Page;

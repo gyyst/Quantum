@@ -20,6 +20,14 @@ import java.util.Map;
 
 public class CodegenLauncher {
 
+    public static final Map<String, String> typeMapping = new HashMap<>() {
+        {
+            put("List", "import java.util.List;");
+            put("Set", "import java.util.Set;");
+            put("Map", "import java.util.Map;");
+        }
+    };
+
     private static final Map<String, HikariDataSource> dataSourceHashMap = new HashMap<>();
 
     static {
@@ -98,11 +106,15 @@ public class CodegenLauncher {
      * 设置类型映射
      */
     private static void registerType() {
-        JdbcTypeMapping.setTypeMapper((_, _, column) -> {
+        JdbcTypeMapping.setTypeMapper((_, table, column) -> {
             if (column.getName().equals("is_delete")) {
                 return Boolean.class.getName();
             }
-
+            if (column.getComment().startsWith("type:")) {
+                String className = column.getComment().split("\\s+")[0].split(":")[1];
+                column.setComment(column.getComment().split("\\s+")[1]);
+                return className;
+            }
             return null;
         });
     }

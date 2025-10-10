@@ -27,7 +27,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 #end
-
+#if(hasText((buildImports)))
+#(buildImports)
+#end
 /**
  * #(table.getComment()) 响应类。
  *

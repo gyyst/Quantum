@@ -28,6 +28,9 @@ import lombok.NoArgsConstructor;
 #end
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+#if(hasText((buildImports)))
+#(buildImports)
+#end
 /**
  * #(table.getComment()) 修改请求类。
  *
