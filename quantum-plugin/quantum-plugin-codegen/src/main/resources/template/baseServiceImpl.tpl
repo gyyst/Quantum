@@ -11,7 +11,6 @@ import #(basePackage).model.request.Add#(entityClassName)Request;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import lombok.extern.slf4j.Slf4j;
 import #(basePackage).model.request.Update#(entityClassName)Request;
 import #(basePackage).model.response.#(entityClassName)Response;
 import #(basePackage).repository.#(entityClassName)Repository;
@@ -24,7 +23,7 @@ import java.util.List;
 import #(serviceImplConfig.buildSuperClassImport());
 import #(packageConfig.entityPackage).#(table.buildEntityClassName());
 import #(packageConfig.mapperPackage).#(table.buildMapperClassName());
-import org.springframework.stereotype.Service;
+
 #if(isCacheExample)
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
@@ -43,11 +42,9 @@ import java.util.List;
  * @author #(javadocConfig.getAuthor())
  * @since #(javadocConfig.getSince())
  */
-@Service
 #if(isCacheExample)
 @CacheConfig(cacheNames = "#(firstCharToLowerCase(entityClassName))")
 #end
-@Slf4j
 public class Base#(table.buildServiceImplClassName()) {
     @Resource
     protected #(entityClassName)Repository #(firstCharToLowerCase(entityClassName))Repository;
