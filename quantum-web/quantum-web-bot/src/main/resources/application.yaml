@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: quantum-web-bot
+  #profiles默认为dev
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 10.243.49.127:8848
+      username: nacos
+      password: mynacos2025
+      namespace: Quantum
+      discovery:
+        namespace: ${spring.cloud.nacos.namespace}
+        group: ${spring.profiles.active}
+      config:
+        namespace: ${spring.cloud.nacos.namespace}
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-redis.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-web.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-satoken.yaml?group=${spring.profiles.active}&refreshEnabled=true

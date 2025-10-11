@@ -1,0 +1,20 @@
+# docker-compose.yml
+version: "3"
+services:
+    napcat:
+        environment:
+            - TZ=Asia/Shanghai
+            - NAPCAT_UID=0
+            - NAPCAT_GID=0
+        ports:
+            - 3000:3000
+            - 3001:3001
+            - 6099:6099
+        container_name: napcat
+        network_mode: bridge
+        restart: unless-stopped
+        image: mlikiowa/napcat-docker:latest
+        volumes:
+            - /opt/napcat/QQ:/app/.config/QQ
+            - /opt/napcat/config:/app/napcat/config
+            - /opt/napcat/logs:/app/napcat/logs
