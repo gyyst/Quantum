@@ -1,4 +1,4 @@
-package com.lunarstra.quantum.generate;
+package com.lunarstra.quantum.key.generate;
 
 /**
  * @author gyyst
@@ -7,6 +7,6 @@ package com.lunarstra.quantum.generate;
  */
 public interface MyKeyGenerators {
 
-    String UID = "uid";
+    String UUIDV7 = "uuidv7";
 
 }

@@ -1,6 +1,7 @@
 package com.lunarstra.quantum.generate;
 
 import com.lunarstra.quantum.CodegenLauncher;
+import com.lunarstra.quantum.key.generate.MyKeyGenerators;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
@@ -30,10 +31,11 @@ public class EntityGenerator implements IGenerator {
     public void generate(Table table, GlobalConfig globalConfig) {
 
         table.getColumns().forEach(column -> {
-            if (column.isPrimaryKey() && !column.getAutoIncrement()) {
+            if (column.isPrimaryKey() && !column.getAutoIncrement() && column.getRawType()
+                .equalsIgnoreCase("varchar")) {
 
                 column.getColumnConfig().setKeyType(KeyType.Generator);
-                column.getColumnConfig().setKeyValue(MyKeyGenerators.UID);
+                column.getColumnConfig().setKeyValue(MyKeyGenerators.UUIDV7);
             }
         });
         if (!globalConfig.isEntityGenerateEnable()) {
