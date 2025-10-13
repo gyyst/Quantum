@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `undo_log`
 
 create table if not exists user
 (
-    id          bigint comment 'id' primary key,
+    id          varchar(64) comment '使用uuidv7' primary key,
     account     varchar(64)                        not null comment '账号',
     password    varchar(256)                       not null comment '密码',
     email       varchar(64)                        null comment '用户邮箱',
@@ -32,7 +32,7 @@ create table if not exists user
 
 create table if not exists user_role
 (
-    user_id     bigint comment '用户id' primary key,
+    user_id     varchar(64) comment '用户id' primary key,
     role_list   varchar(256)                       null comment 'type:List<String> 用户角色',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间'
@@ -40,7 +40,7 @@ create table if not exists user_role
 
 create table if not exists user_open_key
 (
-    user_id     bigint comment '用户id' primary key,
+    user_id     varchar(64) comment '用户id' primary key,
     access_key  varchar(128)                       null comment 'access_key',
     secret_key  varchar(128)                       null comment 'secret_key',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
@@ -51,7 +51,7 @@ create table if not exists user_open_key
 
 create table if not exists user_coin
 (
-    user_id     bigint comment '用户id' primary key,
+    user_id     varchar(64) comment '用户id' primary key,
     coin_num    integer  default 0                 not null comment '硬币数量',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
