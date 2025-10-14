@@ -42,7 +42,7 @@ create table if not exists user_open_key
 (
     user_id     varchar(64) comment '用户id' primary key,
     access_key  varchar(128)                       null comment 'access_key',
-    secret_key  varchar(128)                       null comment 'secret_key',
+    secret_key  varchar(128)                       null comment 'secret_key，存储sha256加密后的字符串',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     index idx_ak_sk (access_key, secret_key),
@@ -52,7 +52,7 @@ create table if not exists user_open_key
 create table if not exists user_coin
 (
     user_id     varchar(64) comment '用户id' primary key,
-    coin_num    integer  default 0                 not null comment '硬币数量',
+    coin_num    decimal(10,2)  default 0                 not null comment '硬币数量',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     is_delete   tinyint  default 0                 not null comment '是否删除'

@@ -59,7 +59,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
         // 可添加多个
         registry.addInterceptor(new SaInterceptor())
             .addPathPatterns("/**")
-            .excludePathPatterns("/doc.html", "/v3/api-docs");
+            .excludePathPatterns("/doc.html", "/v3/api-docs", "");
         registry.addInterceptor(logInterceptor).addPathPatterns("/**").excludePathPatterns("/doc.html", "/v3/api-docs");
     }
 
