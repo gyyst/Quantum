@@ -27,6 +27,7 @@ src/**
 /nbdist/
 /.nb-gradle/
 #build/
+
 !**/src/main/**/build/
 !**/src/test/**/build/
 .xcodemap/**
@@ -34,3 +35,4 @@ src/**
 ### VS Code ###
 .vscode/
 .trae/
+/deploey/env/nacos-docker/env/nacos-standalone-mysql.env
