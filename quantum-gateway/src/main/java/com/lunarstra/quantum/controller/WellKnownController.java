@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class WellKnownController {
@@ -13,7 +14,7 @@ public class WellKnownController {
     public ResponseEntity<Map<String, Object>> handleDevToolsRequest() {
         Map<String, Object> workspace = new HashMap<>();
         workspace.put("root", System.getProperty("user.dir"));
-        workspace.put("uuid", "123e4567-e89b-12d3-a456-426614174000"); // Replace with a valid UUID
+        workspace.put("uuid", UUID.randomUUID().toString()); // Replace with a valid UUID
         Map<String, Object> response = new HashMap<>();
         response.put("workspace", workspace);
         return ResponseEntity.ok(response);

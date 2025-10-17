@@ -6,7 +6,7 @@ spring:
     active: dev
   cloud:
     nacos:
-      server-addr: 10.243.49.127:8848
+      server-addr: nacos.proxyz.dedyn.io:8848
       username: nacos
       password: mynacos2025
       namespace: Quantum
@@ -21,3 +21,7 @@ spring:
       - optional:nacos:quantum-redis.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-web.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-satoken.yaml?group=${spring.profiles.active}&refreshEnabled=true
+
+#  username: ENC(1698316496a12776fa4ad107b8e79fcc)
+#  password: ENC(0b5c53723420de1794264eb736835c9a)
+#  namespace: ENC(03a32326fbf7a228736ccf0d0d2547c8)

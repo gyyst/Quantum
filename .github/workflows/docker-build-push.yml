@@ -73,6 +73,8 @@ jobs:
           push: true
           tags: ${{ steps.meta-gateway.outputs.tags }}
           labels: ${{ steps.meta-gateway.outputs.labels }}
+          build-args: |
+            AES_ENCRYPTION_KEY=${{ secrets.AES_ENCRYPTION_KEY }}
 
       - name: Extract metadata for user service image
         id: meta-user
@@ -95,6 +97,8 @@ jobs:
           push: true
           tags: ${{ steps.meta-user.outputs.tags }}
           labels: ${{ steps.meta-user.outputs.labels }}
+          build-args: |
+            AES_ENCRYPTION_KEY=${{ secrets.AES_ENCRYPTION_KEY }}
 
   build-and-push-combined-image:
     runs-on: ubuntu-latest
@@ -157,3 +161,5 @@ jobs:
           push: true
           tags: ${{ steps.meta-combined.outputs.tags }}
           labels: ${{ steps.meta-combined.outputs.labels }}
+          build-args: |
+            AES_ENCRYPTION_KEY=${{ secrets.AES_ENCRYPTION_KEY }}
