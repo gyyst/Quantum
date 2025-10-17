@@ -23,7 +23,9 @@ import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.PreservedMetadataKeys;
 import com.alibaba.nacos.client.naming.utils.UtilAndComs;
+import com.lunarstra.quantum.utils.EncryptUtil;
 import jakarta.annotation.PostConstruct;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,7 @@ import static com.alibaba.nacos.api.PropertyKeyConst.USERNAME;
  * @author <a href="mailto:78552423@qq.com">eshun</a>
  * @author freeman
  */
+@Data
 @ConfigurationProperties("spring.cloud.nacos.discovery")
 public class NacosDiscoveryProperties {
 
@@ -331,242 +334,6 @@ public class NacosDiscoveryProperties {
         return nacosServiceManager.getNamingService();
     }
 
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
-    }
-
-    public String getLogName() {
-        return logName;
-    }
-
-    public void setLogName(String logName) {
-        this.logName = logName;
-    }
-
-    public void setInetUtils(InetUtils inetUtils) {
-        this.inetUtils = inetUtils;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public String getClusterName() {
-        return clusterName;
-    }
-
-    public void setClusterName(String clusterName) {
-        this.clusterName = clusterName;
-    }
-
-    public String getService() {
-        return service;
-    }
-
-    public void setService(String service) {
-        this.service = service;
-    }
-
-    public boolean isRegisterEnabled() {
-        return registerEnabled;
-    }
-
-    public void setRegisterEnabled(boolean registerEnabled) {
-        this.registerEnabled = registerEnabled;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getIpType() {
-        return ipType;
-    }
-
-    public void setIpType(String ipType) {
-        this.ipType = ipType;
-    }
-
-    public String getNetworkInterface() {
-        return networkInterface;
-    }
-
-    public void setNetworkInterface(String networkInterface) {
-        this.networkInterface = networkInterface;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public boolean isSecure() {
-        return secure;
-    }
-
-    public void setSecure(boolean secure) {
-        this.secure = secure;
-    }
-
-    public Map<String, String> getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
-    }
-
-    public String getServerAddr() {
-        return serverAddr;
-    }
-
-    public void setServerAddr(String serverAddr) {
-        this.serverAddr = serverAddr;
-    }
-
-    public String getAccessKey() {
-        return accessKey;
-    }
-
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public Integer getHeartBeatInterval() {
-        return heartBeatInterval;
-    }
-
-    public void setHeartBeatInterval(Integer heartBeatInterval) {
-        this.heartBeatInterval = heartBeatInterval;
-    }
-
-    public Integer getHeartBeatTimeout() {
-        return heartBeatTimeout;
-    }
-
-    public void setHeartBeatTimeout(Integer heartBeatTimeout) {
-        this.heartBeatTimeout = heartBeatTimeout;
-    }
-
-    public Integer getIpDeleteTimeout() {
-        return ipDeleteTimeout;
-    }
-
-    public void setIpDeleteTimeout(Integer ipDeleteTimeout) {
-        this.ipDeleteTimeout = ipDeleteTimeout;
-    }
-
-    public String getNamingLoadCacheAtStart() {
-        return namingLoadCacheAtStart;
-    }
-
-    public void setNamingLoadCacheAtStart(String namingLoadCacheAtStart) {
-        this.namingLoadCacheAtStart = namingLoadCacheAtStart;
-    }
-
-    public long getWatchDelay() {
-        return watchDelay;
-    }
-
-    public void setWatchDelay(long watchDelay) {
-        this.watchDelay = watchDelay;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isInstanceEnabled() {
-        return instanceEnabled;
-    }
-
-    public void setInstanceEnabled(boolean instanceEnabled) {
-        this.instanceEnabled = instanceEnabled;
-    }
-
-    public boolean isEphemeral() {
-        return ephemeral;
-    }
-
-    public void setEphemeral(boolean ephemeral) {
-        this.ephemeral = ephemeral;
-    }
-
-    public boolean isFailureToleranceEnabled() {
-        return failureToleranceEnabled;
-    }
-
-    public void setFailureToleranceEnabled(boolean failureToleranceEnabled) {
-        this.failureToleranceEnabled = failureToleranceEnabled;
-    }
-
-    public boolean isFailFast() {
-        return failFast;
-    }
-
-    public void setFailFast(boolean failFast) {
-        this.failFast = failFast;
-    }
-
-    public Integer getGracefulShutdownWaitTime() {
-        return gracefulShutdownWaitTime;
-    }
-
-    public void setGracefulShutdownWaitTime(Integer gracefulShutdownWaitTime) {
-        this.gracefulShutdownWaitTime = gracefulShutdownWaitTime;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -620,11 +387,20 @@ public class NacosDiscoveryProperties {
             String serverAddr = env.resolvePlaceholders("${spring.cloud.nacos.discovery.server-addr:}");
             if (StringUtils.isEmpty(serverAddr)) {
                 serverAddr = env.resolvePlaceholders("${spring.cloud.nacos.server-addr:127.0.0.1:8848}");
+                if (EncryptUtil.isEncryptStr(serverAddr)) {
+                    serverAddr = EncryptUtil.decryptByAES(EncryptUtil.trimENC(serverAddr));
+                }
             }
             this.setServerAddr(serverAddr);
         }
         if (StringUtils.isEmpty(this.getNamespace())) {
-            this.setNamespace(env.resolvePlaceholders("${spring.cloud.nacos.discovery.namespace:}"));
+            if (EncryptUtil.isEncryptStr(this.getNamespace())) {
+                String encrypt = env.resolvePlaceholders("${spring.cloud.nacos.discovery.namespace:}");
+                this.setNamespace(EncryptUtil.decryptByAES(EncryptUtil.trimENC(encrypt)));
+            } else {
+                this.setNamespace(env.resolvePlaceholders("${spring.cloud.nacos.discovery.namespace:}"));
+            }
+
         }
         if (StringUtils.isEmpty(this.getAccessKey())) {
             this.setAccessKey(env.resolvePlaceholders("${spring.cloud.nacos.discovery.access-key:}"));
@@ -645,10 +421,22 @@ public class NacosDiscoveryProperties {
             this.setGroup(env.resolvePlaceholders("${spring.cloud.nacos.discovery.group:}"));
         }
         if (StringUtils.isEmpty(this.getUsername())) {
-            this.setUsername(env.resolvePlaceholders("${spring.cloud.nacos.username:}"));
+            if (EncryptUtil.isEncryptStr(this.getUsername())) {
+                String username = env.resolvePlaceholders("${spring.cloud.nacos.discovery.username:}");
+                this.setUsername(EncryptUtil.decryptByAES(EncryptUtil.trimENC(username)));
+            } else {
+                this.setUsername(env.resolvePlaceholders("${spring.cloud.nacos.discovery.username:}"));
+            }
+
         }
         if (StringUtils.isEmpty(this.getPassword())) {
-            this.setPassword(env.resolvePlaceholders("${spring.cloud.nacos.password:}"));
+            if (EncryptUtil.isEncryptStr(this.getPassword())) {
+                String password = env.resolvePlaceholders("${spring.cloud.nacos.discovery.password:}");
+                this.setPassword(EncryptUtil.decryptByAES(EncryptUtil.trimENC(password)));
+            } else {
+                this.setPassword(env.resolvePlaceholders("${spring.cloud.nacos.discovery.password:}"));
+            }
+
         }
     }
 

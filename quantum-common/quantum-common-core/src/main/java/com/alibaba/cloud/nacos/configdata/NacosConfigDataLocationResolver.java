@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.nacos.config;
+package com.alibaba.cloud.nacos.configdata;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.cloud.nacos.NacosPropertiesPrefixer;
-import com.alibaba.cloud.nacos.configdata.NacosConfigDataLoadProperties;
-import com.alibaba.cloud.nacos.configdata.NacosConfigDataResource;
 import com.alibaba.cloud.nacos.utils.StringUtils;
+import com.lunarstra.quantum.utils.EncryptUtil;
 import org.apache.commons.logging.Log;
 import org.springframework.boot.BootstrapRegistry.InstanceSupplier;
 import org.springframework.boot.ConfigurableBootstrapContext;
@@ -99,7 +98,31 @@ public class NacosConfigDataLocationResolver implements ConfigDataLocationResolv
                     () -> binder.bind(nacosConfigPrefix, Bindable.of(NacosConfigDataLoadProperties.class), bindHandler)
                         .orElseGet(NacosConfigDataLoadProperties::new));
         }
-
+        // 获取加密盐值
+        // 如果加密盐值不为空且username符合加密格式，则进行账号解密处理
+        String username = nacosConfigProperties.getUsername();
+        if (StringUtils.isNotBlank(username) && EncryptUtil.isEncryptStr(username)) {
+            nacosConfigProperties.setUsername(EncryptUtil.decryptByAES(EncryptUtil.trimENC(username)));
+        }
+        // 如果加密盐值不为空且password符合加密格式，则进行密码解密处理
+        String password = nacosConfigProperties.getPassword();
+        if (StringUtils.isNotBlank(password) && EncryptUtil.isEncryptStr(password)) {
+            nacosConfigProperties.setPassword(EncryptUtil.decryptByAES(EncryptUtil.trimENC(password)));
+        }
+        // 如果加密盐值不为空且password符合加密格式，则进行密码解密处理
+        String namespace = nacosConfigProperties.getNamespace();
+        if (StringUtils.isNotBlank(namespace) && EncryptUtil.isEncryptStr(namespace)) {
+            nacosConfigProperties.setNamespace(EncryptUtil.decryptByAES(EncryptUtil.trimENC(namespace)));
+        }
+        // 如果加密盐值不为空且password符合加密格式，则进行密码解密处理
+        String serverAddr = nacosConfigProperties.getServerAddr();
+        if (StringUtils.isNotBlank(serverAddr) && EncryptUtil.isEncryptStr(serverAddr)) {
+            nacosConfigProperties.setServerAddr(EncryptUtil.decryptByAES(EncryptUtil.trimENC(serverAddr)));
+        }        // 如果加密盐值不为空且password符合加密格式，则进行密码解密处理
+        String group = nacosConfigProperties.getGroup();
+        if (StringUtils.isNotBlank(group) && EncryptUtil.isEncryptStr(group)) {
+            nacosConfigProperties.setGroup(EncryptUtil.decryptByAES(EncryptUtil.trimENC(group)));
+        }        // 如果加密盐值不为空且password符合加密格式，则进行密码解密处理
         return nacosConfigProperties;
     }
 

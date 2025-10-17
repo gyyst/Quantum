@@ -20,7 +20,10 @@ import com.alibaba.cloud.nacos.utils.PropertySourcesUtils;
 import com.alibaba.cloud.nacos.utils.StringUtils;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lunarstra.quantum.utils.EncryptUtil;
 import jakarta.annotation.PostConstruct;
+import lombok.Data;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +67,7 @@ import static com.alibaba.nacos.api.PropertyKeyConst.USERNAME;
  * @author pbting
  * @author <a href="mailto:lyuzb@lyuzb.com">lyuzb</a>
  */
+@Data
 public class NacosConfigProperties {
 
     /**
@@ -187,6 +191,7 @@ public class NacosConfigProperties {
     /**
      * context path for nacos config server.
      */
+    @Getter
     private String contextPath;
 
     /**
@@ -225,217 +230,36 @@ public class NacosConfigProperties {
         if (environment == null) {
             return;
         }
-
-        String prefix = NacosPropertiesPrefixer.getPrefix(environment);
-
         if (StringUtils.isEmpty(this.getServerAddr())) {
-            String serverAddr = environment.resolvePlaceholders("${" + prefix + ".config.server-addr:}");
+            String serverAddr = environment.resolvePlaceholders("${spring.cloud.nacos.config.server-addr:}");
             if (StringUtils.isEmpty(serverAddr)) {
-                serverAddr = environment.resolvePlaceholders("${" + prefix + ".server-addr:127.0.0.1:8848}");
+                serverAddr = environment.resolvePlaceholders("${spring.cloud.nacos.server-addr:127.0.0.1:8848}");
+            }
+            // 如果加密盐值不为空且username符合加密格式，则进行账号解密处理
+            if (EncryptUtil.isEncryptStr(serverAddr)) {
+                this.setUsername(EncryptUtil.decryptByAES(EncryptUtil.trimENC(serverAddr)));
             }
             this.setServerAddr(serverAddr);
         }
+        // 这里的加解密可以自己实现，我的项目是没有在nacos.config配置下加账号和密码的，所以取得都是spring.cloud.nacos.username和spring.cloud.nacos.password的值
         if (StringUtils.isEmpty(this.getUsername())) {
-            this.setUsername(environment.resolvePlaceholders("${" + prefix + ".username:}"));
+            this.setUsername(environment.resolvePlaceholders("${spring.cloud.nacos.username:}"));
         }
         if (StringUtils.isEmpty(this.getPassword())) {
-            this.setPassword(environment.resolvePlaceholders("${" + prefix + ".password:}"));
+            this.setPassword(environment.resolvePlaceholders("${spring.cloud.nacos.password:}"));
+        }
+
+        // 如果加密盐值不为空且username符合加密格式，则进行账号解密处理
+        if (EncryptUtil.isEncryptStr(this.getUsername())) {
+            this.setUsername(EncryptUtil.decryptByAES(EncryptUtil.trimENC(this.getUsername())));
+        }
+        // 如果加密盐值不为空且password符合加密格式，则进行密码解密处理
+        if (EncryptUtil.isEncryptStr(this.getPassword())) {
+            this.setPassword(EncryptUtil.decryptByAES(EncryptUtil.trimENC(this.getPassword())));
         }
     }
 
     // todo sts support
-
-    public String getServerAddr() {
-        return serverAddr;
-    }
-
-    public void setServerAddr(String serverAddr) {
-        this.serverAddr = serverAddr;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getFileExtension() {
-        return fileExtension;
-    }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public int getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
-    }
-
-    public String getMaxRetry() {
-        return maxRetry;
-    }
-
-    public void setMaxRetry(String maxRetry) {
-        this.maxRetry = maxRetry;
-    }
-
-    public String getConfigLongPollTimeout() {
-        return configLongPollTimeout;
-    }
-
-    public void setConfigLongPollTimeout(String configLongPollTimeout) {
-        this.configLongPollTimeout = configLongPollTimeout;
-    }
-
-    public String getConfigRetryTime() {
-        return configRetryTime;
-    }
-
-    public void setConfigRetryTime(String configRetryTime) {
-        this.configRetryTime = configRetryTime;
-    }
-
-    public Boolean getEnableRemoteSyncConfig() {
-        return enableRemoteSyncConfig;
-    }
-
-    public void setEnableRemoteSyncConfig(Boolean enableRemoteSyncConfig) {
-        this.enableRemoteSyncConfig = enableRemoteSyncConfig;
-    }
-
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
-    }
-
-    public String getAccessKey() {
-        return accessKey;
-    }
-
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public String getRamRoleName() {
-        return ramRoleName;
-    }
-
-    public void setRamRoleName(String ramRoleName) {
-        this.ramRoleName = ramRoleName;
-    }
-
-    public String getEncode() {
-        return encode;
-    }
-
-    public void setEncode(String encode) {
-        this.encode = encode;
-    }
-
-    public String getContextPath() {
-        return contextPath;
-    }
-
-    public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
-    }
-
-    public String getClusterName() {
-        return clusterName;
-    }
-
-    public void setClusterName(String clusterName) {
-        this.clusterName = clusterName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Environment getEnvironment() {
-        return environment;
-    }
-
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
-
-    public List<Config> getSharedConfigs() {
-        return sharedConfigs;
-    }
-
-    public void setSharedConfigs(List<Config> sharedConfigs) {
-        this.sharedConfigs = sharedConfigs;
-    }
-
-    public List<Config> getExtensionConfigs() {
-        return extensionConfigs;
-    }
-
-    public void setExtensionConfigs(List<Config> extensionConfigs) {
-        this.extensionConfigs = extensionConfigs;
-    }
-
-    public boolean isRefreshEnabled() {
-        return refreshEnabled;
-    }
-
-    public void setRefreshEnabled(boolean refreshEnabled) {
-        this.refreshEnabled = refreshEnabled;
-    }
 
     /**
      * recommend to use {@link NacosConfigProperties#sharedConfigs} .
