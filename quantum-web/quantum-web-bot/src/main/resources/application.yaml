@@ -6,10 +6,10 @@ spring:
     active: dev
   cloud:
     nacos:
-      server-addr: 10.243.49.127:8848
-      username: nacos
-      password: mynacos2025
-      namespace: Quantum
+      server-addr: ENC(61d7446aec5f2f18f64a56b7b32b80d7265690a9d8da11de21fa882ab193d58f)
+      username: ENC(3be77249c184d1f14221529a81d9a488)
+      password: ENC(d1aabb8c715b219ed6acad0eb078fb64)
+      namespace: ENC(03a32326fbf7a228736ccf0d0d2547c8)
       discovery:
         namespace: ${spring.cloud.nacos.namespace}
         group: ${spring.profiles.active}

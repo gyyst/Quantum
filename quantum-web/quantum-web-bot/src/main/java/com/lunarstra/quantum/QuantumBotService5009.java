@@ -13,9 +13,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @EnableSimbot
 @EnableDubbo
-public class QuantumUserBotService5009 {
+public class QuantumBotService5009 {
     public static void main(String[] args) {
-        SpringApplication.run(QuantumUserBotService5009.class, args);
+        SpringApplication.run(QuantumBotService5009.class, args);
     }
 
 }

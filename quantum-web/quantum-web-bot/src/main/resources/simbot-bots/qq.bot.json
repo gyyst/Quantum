@@ -1,0 +1,8 @@
+{
+  "component": "simbot.onebot11",
+  "authorization": {
+    "botUniqueId": "479744279",
+    "apiServerHost": "http://napcat.proxyz.dedyn.io:3000",
+    "eventServerHost": "ws://napcat.proxyz.dedyn.io:3001"
+  }
+}
