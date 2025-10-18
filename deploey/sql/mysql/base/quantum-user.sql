@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `undo_log`
 
 create table if not exists user
 (
-    id          varchar(64) comment '使用uuidv7' primary key,
+    id          varchar(64) comment '用户id' primary key,
     account     varchar(64)                        not null comment '账号',
     password    varchar(256)                       not null comment '密码',
     email       varchar(64)                        null comment '用户邮箱',
@@ -52,8 +52,8 @@ create table if not exists user_open_key
 create table if not exists user_coin
 (
     user_id     varchar(64) comment '用户id' primary key,
-    coin_num    decimal(10,2)  default 0                 not null comment '硬币数量',
-    create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
-    update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    is_delete   tinyint  default 0                 not null comment '是否删除'
+    coin_num    decimal(10, 2) default 0                 not null comment '硬币数量',
+    create_time datetime       default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time datetime       default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
+    is_delete   tinyint        default 0                 not null comment '是否删除'
 ) comment '用户硬币' collate = utf8mb4_unicode_ci;

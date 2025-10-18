@@ -1,6 +1,5 @@
 package com.lunarstra.quantum.generate;
 
-import com.lunarstra.quantum.CodegenLauncher;
 import com.lunarstra.quantum.key.generate.MyKeyGenerators;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.config.EntityConfig;

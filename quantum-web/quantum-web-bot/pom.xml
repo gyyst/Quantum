@@ -20,17 +20,17 @@
         <dependency>
             <groupId>love.forte.simbot</groupId>
             <artifactId>simbot-core-spring-boot-starter</artifactId>
-            <version>4.14.0</version>
+            <version>RELEASE</version>
         </dependency>
         <dependency>
             <groupId>love.forte.simbot.component</groupId>
             <artifactId>simbot-component-onebot-v11-core-jvm</artifactId>
-            <version>1.8.2</version>
+            <version>RELEASE</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-java-jvm</artifactId>
-            <version>3.3.1</version>
+            <version>RELEASE</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
