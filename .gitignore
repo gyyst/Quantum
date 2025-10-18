@@ -36,3 +36,4 @@ src/**
 .vscode/
 .trae/
 /deploey/env/nacos-docker/env/nacos-standalone-mysql.env
+/quantum-plugin/quantum-plugin-codegen/src/main/java/com/lunarstra/quantum/CodegenLauncher.java
