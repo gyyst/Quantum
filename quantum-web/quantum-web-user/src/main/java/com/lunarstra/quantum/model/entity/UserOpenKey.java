@@ -2,7 +2,6 @@ package com.lunarstra.quantum.model.entity;
 
 import java.io.Serial;
 import com.mybatisflex.core.handler.JacksonTypeHandler;
-import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
@@ -13,38 +12,42 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
-
 /**
- * 接口信息 实体类。
+ * 用户openKey 实体类。
  *
  * @author lunarstra
- * @since 2025-10-12
+ * @since 2025-10-18
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "接口信息")
-@Table("test_info")
+@Schema(description = "用户openKey")
+@Table("user_open_key")
 
-public class TestInfo implements Serializable {
+public class UserOpenKey implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -1L;
 
     /**
-     * 主键
+     * 用户id
      */
-    @Id(keyType = KeyType.Auto)
-    @Schema(description = "主键")
-    private Long id;
+    @Id(keyType = KeyType.Generator, value = "uuidv7")
+    @Schema(description = "用户id")
+    private String userId;
 
     /**
-     * 名称
+     * access_key
      */
-    @Schema(description = "名称")
-    private List<String> name;
+    @Schema(description = "access_key")
+    private String accessKey;
+
+    /**
+     * secret_key，存储sha256加密后的字符串
+     */
+    @Schema(description = "secret_key，存储sha256加密后的字符串")
+    private String secretKey;
 
     /**
      * 创建时间
@@ -57,12 +60,5 @@ public class TestInfo implements Serializable {
      */
     @Schema(description = "更新时间")
     private LocalDateTime updateTime;
-
-    /**
-     * 是否删除
-     */
-    @Column(isLogicDelete = true)
-    @Schema(description = "是否删除")
-    private Boolean isDelete;
 
 }

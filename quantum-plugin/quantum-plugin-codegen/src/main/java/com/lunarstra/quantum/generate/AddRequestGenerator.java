@@ -1,5 +1,6 @@
 package com.lunarstra.quantum.generate;
 
+import com.lunarstra.quantum.CodegenLauncher;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.PackageConfig;

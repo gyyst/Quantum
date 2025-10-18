@@ -2,39 +2,39 @@ package com.lunarstra.quantum.model.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
- * 接口信息 修改请求类。
+ * 用户硬币 修改请求类。
  *
  * @author lunarstra
- * @since 2025-10-12
+ * @since 2025-10-18
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "接口")
-public class UpdateTestInfoRequest implements Serializable {
+public class UpdateUserCoinRequest implements Serializable {
 
     /**
-     * 主键
+     * 用户id
      */
-    @Schema(description = "主键")
-    @NotNull(message = "id不能为空")
-    private Long id;
+    @Schema(description = "用户id")
+    @NotBlank(message = "userId不能为空")
+    private String userId;
 
     /**
-     * 名称
+     * 硬币数量
      */
-    @Schema(description = "名称")
-    private List<String> name;
+    @Schema(description = "硬币数量")
+    private BigDecimal coinNum;
 
 }

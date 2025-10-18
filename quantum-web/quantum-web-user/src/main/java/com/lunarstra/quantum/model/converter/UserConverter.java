@@ -1,0 +1,89 @@
+package com.lunarstra.quantum.model.converter;
+
+import com.lunarstra.quantum.model.entity.User;
+import com.lunarstra.quantum.model.request.AddUserRequest;
+import com.lunarstra.quantum.model.request.UpdateUserRequest;
+import com.lunarstra.quantum.model.response.UserResponse;
+
+/**
+ * 用户 转换类。
+ *
+ * @author lunarstra
+ * @since 2025-10-18
+ */
+
+public class UserConverter {
+
+    /**
+     * entity -> response
+     *
+     * @return
+     */
+    public static UserResponse entityConvert2Response(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(user.getId());
+        userResponse.setAccount(user.getAccount());
+        userResponse.setPassword(user.getPassword());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setPhone(user.getPhone());
+        userResponse.setName(user.getName());
+        userResponse.setAvatar(user.getAvatar());
+        userResponse.setProfile(user.getProfile());
+        userResponse.setState(user.getState());
+        userResponse.setCreateTime(user.getCreateTime());
+        userResponse.setUpdateTime(user.getUpdateTime());
+
+        return userResponse;
+    }
+
+    /**
+     * addRequest -> entity
+     *
+     * @return
+     */
+    public static User addRequestConvert2Entity(AddUserRequest addUserRequest) {
+        if (addUserRequest == null) {
+            return null;
+        }
+        User user = new User();
+
+        user.setAccount(addUserRequest.getAccount());
+        user.setPassword(addUserRequest.getPassword());
+        user.setEmail(addUserRequest.getEmail());
+        user.setPhone(addUserRequest.getPhone());
+        user.setName(addUserRequest.getName());
+        user.setAvatar(addUserRequest.getAvatar());
+        user.setProfile(addUserRequest.getProfile());
+        user.setState(addUserRequest.getState());
+
+        return user;
+    }
+
+    /**
+     * updateRequest -> entity
+     *
+     * @return
+     */
+    public static User updateRequestConvert2Entity(UpdateUserRequest updateUserRequest) {
+        if (updateUserRequest == null) {
+            return null;
+        }
+        User user = new User();
+
+        user.setId(updateUserRequest.getId());
+        user.setAccount(updateUserRequest.getAccount());
+        user.setPassword(updateUserRequest.getPassword());
+        user.setEmail(updateUserRequest.getEmail());
+        user.setPhone(updateUserRequest.getPhone());
+        user.setName(updateUserRequest.getName());
+        user.setAvatar(updateUserRequest.getAvatar());
+        user.setProfile(updateUserRequest.getProfile());
+        user.setState(updateUserRequest.getState());
+
+        return user;
+    }
+}

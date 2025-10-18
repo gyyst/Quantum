@@ -15,7 +15,6 @@ public class TestController {
 
     @GetMapping("/hello")
     public String hello() {
-        System.out.println(Thread.currentThread());
         return "Hello World!";
     }
 }

@@ -2,7 +2,7 @@ package com.lunarstra.quantum.model.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,23 +12,29 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 接口信息 新增请求类。
+ * 用户角色关系 修改请求类。
  *
  * @author lunarstra
- * @since 2025-10-12
+ * @since 2025-10-18
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "接口")
-public class AddTestInfoRequest implements Serializable {
+public class UpdateUserRoleRequest implements Serializable {
 
     /**
-     * 名称
+     * 用户id
      */
-    @Schema(description = "名称")
-    @NotNull(message = "name不能为空")
-    private List<String> name;
+    @Schema(description = "用户id")
+    @NotBlank(message = "userId不能为空")
+    private String userId;
+
+    /**
+     * 用户角色
+     */
+    @Schema(description = "用户角色")
+    private List<String> roleList;
 
 }

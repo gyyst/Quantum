@@ -12,29 +12,29 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 接口信息 响应类。
+ * 用户角色关系 响应类。
  *
  * @author lunarstra
- * @since 2025-10-12
+ * @since 2025-10-18
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "接口")
-public class TestInfoResponse implements Serializable {
+public class UserRoleResponse implements Serializable {
 
     /**
-     * 主键
+     * 用户id
      */
-    @Schema(description = "主键")
-    private Long id;
+    @Schema(description = "用户id")
+    private String userId;
 
     /**
-     * 名称
+     * 用户角色
      */
-    @Schema(description = "名称")
-    private List<String> name;
+    @Schema(description = "用户角色")
+    private List<String> roleList;
 
     /**
      * 创建时间
