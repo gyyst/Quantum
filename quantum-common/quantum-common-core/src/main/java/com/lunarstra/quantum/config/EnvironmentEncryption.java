@@ -20,11 +20,6 @@ import java.util.Properties;
 @Configuration
 public class EnvironmentEncryption implements EnvironmentPostProcessor {
 
-    public static void main(String[] args) {
-        System.out.println(EncryptUtil.encryptByAES("quantum"));
-        System.out.println(EncryptUtil.encryptByAES("Mynacos0.0!@#"));
-    }
-
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         // 从系统变量或环境配置中获取盐值(密钥)
