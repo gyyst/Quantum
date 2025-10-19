@@ -121,8 +121,8 @@ public class User implements Serializable {
         BANNED(1, "禁用");
 
         @EnumValue
-        private int code;
+        private final int code;
 
-        private String description;
+        private final String description;
     }
 }

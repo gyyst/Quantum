@@ -3,6 +3,7 @@
 #set(swaggerVersion = entityConfig.getSwaggerVersion())
 #set(withActiveRecord = entityConfig.isWithActiveRecord())
 #set(entityClassName = table.buildEntityClassName())
+#set(tableComment = table.getComment())
 #set(basePackage = packageConfig.getBasePackage())
 package #(packageConfig.entityPackage);
 
