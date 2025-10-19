@@ -32,4 +32,9 @@ public class UserRepository extends ServiceImpl<UserMapper, User> {
         ThrowUtils.throwIf(user == null, ErrorCode.NOT_FOUND_ERROR);
         return user;
     }
+
+    public boolean checkAccountExist(String account) {
+        QueryWrapper queryWrapper = new QueryWrapper().from(USER).where(USER.ACCOUNT.eq(account));
+        return this.exists(queryWrapper);
+    }
 }

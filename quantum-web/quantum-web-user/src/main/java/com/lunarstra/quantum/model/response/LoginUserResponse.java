@@ -1,6 +1,7 @@
 package com.lunarstra.quantum.model.response;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.List;
  * 已登录用户视图（脱敏）
  **/
 @Data
+@Builder
 public class LoginUserResponse implements Serializable {
 
     private static final long serialVersionUID = 6037052489080981992L;
@@ -23,6 +25,11 @@ public class LoginUserResponse implements Serializable {
      * id
      */
     private String id;
+
+    /**
+     * id
+     */
+    private String account;
 
     /**
      * 用户角色

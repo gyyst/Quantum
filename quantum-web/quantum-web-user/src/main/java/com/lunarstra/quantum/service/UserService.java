@@ -4,10 +4,14 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.lunarstra.quantum.common.ErrorCode;
 import com.lunarstra.quantum.exception.BusinessException;
+import com.lunarstra.quantum.exception.ThrowUtils;
 import com.lunarstra.quantum.model.converter.UserConverter;
 import com.lunarstra.quantum.model.entity.User;
 import com.lunarstra.quantum.model.request.UserLoginRequest;
+import com.lunarstra.quantum.model.request.UserRegisterRequest;
+import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest;
 import com.lunarstra.quantum.model.response.LoginUserResponse;
+import com.lunarstra.quantum.model.validator.RegisterValidator;
 import com.lunarstra.quantum.repository.UserRepository;
 import com.lunarstra.quantum.service.base.BaseUserService;
 import com.lunarstra.quantum.utils.EncryptUtil;
@@ -43,5 +47,69 @@ public class UserService extends BaseUserService {
         }
         StpUtil.login(user.getId(), loginRequest.getRemember());
         return UserConverter.convertUser2LoginUserInfo(user);
+    }
+
+    /**
+     * 登出
+     *
+     * @return
+     */
+    public Boolean logout() {
+        StpUtil.logout();
+        return true;
+    }
+
+    /**
+     * 是否登录
+     *
+     * @return
+     */
+    public Boolean isLogin() {
+        return StpUtil.isLogin();
+    }
+
+    /**
+     * 用户注册
+     *
+     * @param registerRequest
+     * @return
+     */
+    public LoginUserResponse register(UserRegisterRequest registerRequest) {
+        //校验
+        RegisterValidator.validRegisterInfo(registerRequest);
+
+        boolean isExits = userRepository.checkAccountExist(registerRequest.getAccount());
+        ThrowUtils.throwIf(isExits, ErrorCode.DATA_EXITS, "账号已被占用");
+        User user = User.builder()
+            .account(registerRequest.getAccount())
+            .name(registerRequest.getName())
+            .phone(registerRequest.getPhone())
+            .avatar(registerRequest.getAvatar())
+            .email(registerRequest.getEmail())
+            .profile(registerRequest.getProfile())
+            .state(User.UserState.NORMAL)
+            .build();
+        boolean save = userRepository.save(user);
+        return LoginUserResponse.builder()
+            .id(user.getId())
+            .account(user.getAccount())
+            .name(user.getName())
+            .phone(user.getPhone())
+            .avatar(user.getAvatar())
+            .email(user.getEmail())
+            .profile(user.getProfile())
+            .stateString(user.getState().getDescription())
+            .build();
+    }
+
+    /**
+     * 注册用户发送验证码
+     *
+     * @param request
+     * @return
+     */
+    public Boolean validCodeSend(UserRegisterValidCodeSendRequest request) {
+
+        return null;
     }
 }

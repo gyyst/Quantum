@@ -1,10 +1,13 @@
 package com.lunarstra.quantum.common;
 
+import lombok.Getter;
+
 /**
  * 错误码
  *
  * @author gyyst
  */
+@Getter
 public enum ErrorCode {
 
     SUCCESS(0, "ok"),
@@ -47,11 +50,4 @@ public enum ErrorCode {
         this.message = message;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
