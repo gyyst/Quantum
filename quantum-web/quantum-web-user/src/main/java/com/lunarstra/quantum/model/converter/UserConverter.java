@@ -1,8 +1,10 @@
 package com.lunarstra.quantum.model.converter;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.lunarstra.quantum.model.entity.User;
 import com.lunarstra.quantum.model.request.AddUserRequest;
 import com.lunarstra.quantum.model.request.UpdateUserRequest;
+import com.lunarstra.quantum.model.response.LoginUserResponse;
 import com.lunarstra.quantum.model.response.UserResponse;
 
 /**
@@ -85,5 +87,24 @@ public class UserConverter {
         user.setState(updateUserRequest.getState());
 
         return user;
+    }
+
+    /**
+     * User -> LoginUserResponse
+     *
+     * @param user
+     * @return
+     */
+    public static LoginUserResponse convertUser2LoginUserInfo(User user) {
+        LoginUserResponse loginUserResponse = new LoginUserResponse();
+        loginUserResponse.setTokenInfo(StpUtil.getTokenInfo());
+        loginUserResponse.setId(user.getId());
+        loginUserResponse.setEmail(user.getEmail());
+        loginUserResponse.setPhone(user.getPhone());
+        loginUserResponse.setName(user.getName());
+        loginUserResponse.setAvatar(user.getAvatar());
+        loginUserResponse.setProfile(user.getAvatar());
+        loginUserResponse.setStateString(user.getState().getDescription());
+        return loginUserResponse;
     }
 }

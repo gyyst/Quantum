@@ -1,5 +1,6 @@
 package com.lunarstra.quantum.model.request;
 
+import com.lunarstra.quantum.model.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
@@ -71,6 +72,6 @@ public class AddUserRequest implements Serializable {
      * 用户状态
      */
     @Schema(description = "用户状态")
-    private Integer state;
+    private User.UserState state;
 
 }

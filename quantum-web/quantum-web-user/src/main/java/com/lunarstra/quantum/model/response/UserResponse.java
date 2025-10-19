@@ -1,5 +1,6 @@
 package com.lunarstra.quantum.model.response;
 
+import com.lunarstra.quantum.model.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -75,7 +76,7 @@ public class UserResponse implements Serializable {
      * 用户状态
      */
     @Schema(description = "用户状态")
-    private Integer state;
+    private User.UserState state;
 
     /**
      * 创建时间

@@ -1,7 +1,10 @@
 package com.lunarstra.quantum.config;
 
+import com.lunarstra.quantum.key.generate.MyKeyGenerators;
+import com.lunarstra.quantum.key.generate.UUIDKeyGenerator;
 import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.audit.AuditManager;
+import com.mybatisflex.core.keygen.KeyGeneratorFactory;
 import com.mybatisflex.core.query.QueryColumnBehavior;
 import com.mybatisflex.spring.boot.MyBatisFlexCustomizer;
 import lombok.extern.slf4j.Slf4j;
@@ -24,5 +27,6 @@ public class MyBatisFlexConfiguration implements MyBatisFlexCustomizer {
     public void customize(FlexGlobalConfig flexGlobalConfig) {
         QueryColumnBehavior.setIgnoreFunction(QueryColumnBehavior.IGNORE_BLANK);
         QueryColumnBehavior.setSmartConvertInToEquals(true);
+        KeyGeneratorFactory.register(MyKeyGenerators.UUIDV7, new UUIDKeyGenerator());
     }
 }

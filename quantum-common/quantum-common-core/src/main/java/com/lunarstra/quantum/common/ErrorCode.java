@@ -1,6 +1,5 @@
 package com.lunarstra.quantum.common;
 
-
 /**
  * 错误码
  *
@@ -14,6 +13,7 @@ public enum ErrorCode {
     PARAMS_ERROR(40000, "请求参数错误"),
     DATA_EXITS(40001, "数据已存在"),
     DATA_NOT_EXITS(40002, "数据已存在"),
+    PASSWORD_ERROR(40003, "密码错误"),
     NOT_LOGIN_ERROR(40100, "未登录"),
     NO_AUTH_ERROR(40101, "无权限"),
     FORBIDDEN_ERROR(40300, "禁止访问"),

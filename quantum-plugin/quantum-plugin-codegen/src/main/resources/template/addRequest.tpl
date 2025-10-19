@@ -3,11 +3,12 @@
 #set(swaggerVersion = entityConfig.getSwaggerVersion())
 #set(withActiveRecord = entityConfig.isWithActiveRecord())
 #set(entityClassName = table.buildEntityClassName())
-package #(packageConfig.entityPackage);
+package #(packageConfig.basePackage).model.request;
 
 #for(importClass : table.buildImports(isBase))
 import #(importClass);
 #end
+import #(packageConfig.entityPackage).#(table.buildEntityClassName());
 #if(withSwagger && swaggerVersion.getName() == "FOX")
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,9 +29,12 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+
+
 #if(hasText((buildImports)))
 #(buildImports)
 #end
+
 /**
  * #(table.getComment()) 新增请求类。
  *
@@ -76,7 +80,21 @@ public class Add#(entityClassName)Request#if(withActiveRecord) extends Model<#(e
        @NotNull(message = "#(column.property)不能为空")
        #end
        #end
-       private #(column.propertySimpleType) #(column.property)#if(hasText(column.propertyDefaultValue)) = #(column.propertyDefaultValue)#end;
+       #set(isEnumField = false)
+       #set(enumType = column.propertySimpleType)
+       #if(enumDefinitions && enumDefinitions.size() > 0)
+           #for(enumDef : enumDefinitions)
+               #if(column.property == enumDef.fieldName)
+                   #set(isEnumField = true)
+                   #set(enumType = enumDef.enumName)
+                   #break
+               #end
+           #end
+       #end
+       private #if(isEnumField)#(enumType) #else#(column.propertySimpleType) #end #(column.property) #if(hasText(column
+       .propertyDefaultValue))
+        = #(column.propertyDefaultValue)#end;
+
    #end
 
 #end

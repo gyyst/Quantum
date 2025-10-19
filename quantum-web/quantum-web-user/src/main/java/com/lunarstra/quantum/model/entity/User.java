@@ -1,18 +1,21 @@
 package com.lunarstra.quantum.model.entity;
 
-import java.io.Serial;
-import com.mybatisflex.core.handler.JacksonTypeHandler;
 import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.EnumValue;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * 用户 实体类。
  *
@@ -84,7 +87,7 @@ public class User implements Serializable {
      * 用户状态
      */
     @Schema(description = "用户状态")
-    private Integer state;
+    private UserState state;
 
     /**
      * 创建时间
@@ -105,4 +108,21 @@ public class User implements Serializable {
     @Schema(description = "是否删除")
     private Boolean isDelete;
 
+    @Getter
+    @AllArgsConstructor
+    public enum UserState {
+        /**
+         * 正常
+         */
+        NORMAL(0, "正常"),
+        /**
+         * 禁用
+         */
+        BANNED(1, "禁用");
+
+        @EnumValue
+        private int code;
+
+        private String description;
+    }
 }

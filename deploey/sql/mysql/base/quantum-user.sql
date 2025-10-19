@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `undo_log`
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
 
-
+drop table if exists user;
 create table if not exists user
 (
     id          varchar(64) comment '用户id' primary key,
@@ -24,7 +24,7 @@ create table if not exists user
     name        varchar(32)                        null comment '用户昵称',
     avatar      varchar(256)                       null comment '用户头像',
     profile     varchar(512)                       null comment '用户简介',
-    state       tinyint                            null comment '用户状态',
+    state       tinyint                            null comment 'enum:UserState(NORMAL:0:正常, BANNED:1:禁用) 用户状态',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     is_delete   tinyint  default 0                 not null comment '是否删除'

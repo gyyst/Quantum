@@ -1,6 +1,5 @@
 package com.lunarstra.quantum.controller;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.lunarstra.quantum.annotation.RedisLimit;
 import com.lunarstra.quantum.common.BaseResponse;
 import com.lunarstra.quantum.constant.LimitType;
@@ -11,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,18 +36,18 @@ public class LoginController {
     public BaseResponse<LoginUserResponse> userLogin(@RequestBody @Validated UserLoginRequest loginRequest) {
         return BaseResponse.success(userService.login(loginRequest));
     }
-
-    @SaCheckLogin
-    @GetMapping("/logout")
-    @RedisLimit(redisKeyPrefix = "LoginController", limitType = LimitType.USER, count = 1)
-    public BaseResponse<Boolean> userLogout() {
-        return BaseResponse.success(userService.logout());
-    }
-
-    @GetMapping("/isLogin")
-    @RedisLimit(redisKeyPrefix = "LoginController", limitType = LimitType.USER, count = 1)
-    public BaseResponse<Boolean> isLogin() {
-        return BaseResponse.success(userService.isLogin());
-    }
+    //
+    //    @SaCheckLogin
+    //    @GetMapping("/logout")
+    //    @RedisLimit(redisKeyPrefix = "LoginController", limitType = LimitType.USER, count = 1)
+    //    public BaseResponse<Boolean> userLogout() {
+    //        return BaseResponse.success(userService.logout());
+    //    }
+    //
+    //    @GetMapping("/isLogin")
+    //    @RedisLimit(redisKeyPrefix = "LoginController", limitType = LimitType.USER, count = 1)
+    //    public BaseResponse<Boolean> isLogin() {
+    //        return BaseResponse.success(userService.isLogin());
+    //    }
 
 }

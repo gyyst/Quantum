@@ -147,6 +147,7 @@ public class CodegenLauncher {
         globalConfig.setServiceImplPackage("com.lunarstra.quantum.service");
         globalConfig.setServiceImplClassSuffix("Service");
         globalConfig.setServiceImplOverwriteEnable(true);
+        
         // 可以单独配置某个列
         //        ColumnConfig columnConfig = new ColumnConfig();
         //        columnConfig.setColumnName("is_delete");

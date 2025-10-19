@@ -11,6 +11,9 @@ package #(packageConfig.entityPackage);
 import java.io.Serial;
 #end
 import com.mybatisflex.core.handler.JacksonTypeHandler;
+import com.mybatisflex.annotation.EnumValue;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 #for(importClass : table.buildImports(isBase))
 import #(importClass);
 #end
@@ -118,4 +121,28 @@ public class #(entityClassName)#if(withActiveRecord) extends Model<#(entityClass
     #end
 
     #end
+#end
+#if(enumDefinitions && enumDefinitions.size() > 0)
+#for(enumDef : enumDefinitions)
+#set(enumName = enumDef.enumName)
+#set(enumValues = enumDef.enumValues)
+#set(fieldName = enumDef.fieldName)
+
+    @Getter
+    @AllArgsConstructor
+    public enum #(enumName) {
+#for(enumValue : enumValues)
+        /**
+         * #(enumValue.description)
+         */
+        #(enumValue.name)(#(enumValue.code), "#(enumValue.description)")#(for.index < enumValues.size() - 1 ? "," : ";")
+
+#end
+
+        @EnumValue
+        private final int code;
+
+        private final String description;
+    }
+#end
 #end}

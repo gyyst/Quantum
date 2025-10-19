@@ -10,6 +10,7 @@ import com.mybatisflex.core.handler.JacksonTypeHandler;
 #for(importClass : table.buildImports(isBase))
 import #(importClass);
 #end
+import #(packageConfig.entityPackage).#(table.buildEntityClassName());
 #if(withSwagger && swaggerVersion.getName() == "FOX")
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -67,7 +68,20 @@ public class #(entityClassName)Response#if(withActiveRecord) extends Model<#(ent
        #if(comment.startsWith("json"))
        @Column(typeHandler = JacksonTypeHandler.class)
        #end
-       private #(column.propertySimpleType) #(column.property)#if(hasText(column.propertyDefaultValue)) = #(column.propertyDefaultValue)#end;
+       #set(isEnumField = false)
+       #set(enumType = column.propertySimpleType)
+       #if(enumDefinitions && enumDefinitions.size() > 0)
+           #for(enumDef : enumDefinitions)
+               #if(column.property == enumDef.fieldName)
+                   #set(isEnumField = true)
+                   #set(enumType = enumDef.enumName)
+                   #break
+               #end
+           #end
+       #end
+       private #if(isEnumField)#(enumType) #else#(column.propertySimpleType) #end #(column.property) #if(hasText(column
+       .propertyDefaultValue))
+        = #(column.propertyDefaultValue)#end;
    #end
 
 #end

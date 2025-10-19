@@ -1,7 +1,6 @@
 package com.lunarstra.quantum.generate;
 
 import com.lunarstra.quantum.CodegenLauncher;
-import com.lunarstra.quantum.key.generate.MyKeyGenerators;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
@@ -11,11 +10,16 @@ import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.codegen.generator.IGenerator;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EntityGenerator implements IGenerator {
+
+    public static ThreadLocal<List<Map<String, Object>>> enumDefinitionsContext = new ThreadLocal<>();
 
     @Override
     public String getTemplatePath() {
@@ -29,15 +33,33 @@ public class EntityGenerator implements IGenerator {
 
     @Override
     public void generate(Table table, GlobalConfig globalConfig) {
-
         table.getColumns().forEach(column -> {
             if (column.isPrimaryKey() && !column.getAutoIncrement() && column.getRawType()
                 .equalsIgnoreCase("varchar")) {
 
                 column.getColumnConfig().setKeyType(KeyType.Generator);
-                column.getColumnConfig().setKeyValue(MyKeyGenerators.UUIDV7);
+                // 注释掉不存在的MyKeyGenerators引用
+                // column.getColumnConfig().setKeyValue(MyKeyGenerators.UUIDV7);
             }
         });
+
+        // 处理枚举表达式
+        List<Map<String, Object>> enumDefinitions = new ArrayList<>();
+        table.getColumns().forEach(column -> {
+            String comment = column.getComment();
+            if (comment != null && comment.startsWith("enum:")) {
+                Map<String, Object> enumDef = parseEnumExpression(comment, column.getProperty());
+                if (enumDef != null) {
+                    enumDefinitions.add(enumDef);
+                    // 修改字段类型为枚举类型
+                    column.setPropertyType(enumDef.get("enumName") + "");
+                    // 修改注释，移除枚举表达式部分
+                    column.setComment(comment.replaceAll("enum:.*?\\)", "").trim());
+                }
+            }
+        });
+        enumDefinitionsContext.set(enumDefinitions);
+
         if (!globalConfig.isEntityGenerateEnable()) {
             return;
         }
@@ -60,6 +82,7 @@ public class EntityGenerator implements IGenerator {
         params.put("javadocConfig", globalConfig.getJavadocConfig());
         params.put("buildImports", buildImports(table));
         params.put("isBase", false);
+        params.put("enumDefinitions", enumDefinitions);
 
         globalConfig.getTemplateConfig().getTemplate().generate(params, getTemplatePath(), entityJavaFile);
     }
@@ -76,5 +99,53 @@ public class EntityGenerator implements IGenerator {
             }
         });
         return stringBuilder.toString();
+    }
+
+    /**
+     * 解析枚举表达式
+     * 格式：enum:EnumName(VALUE1:CODE1:DESC1, VALUE2:CODE2:DESC2, ...)
+     *
+     * @param comment   字段注释
+     * @param fieldName 字段名
+     * @return 枚举定义的Map，包含enumName和enumValues
+     */
+    private Map<String, Object> parseEnumExpression(String comment, String fieldName) {
+        try {
+            // 匹配枚举表达式
+            Pattern pattern = Pattern.compile("enum:(\\w+)\\((.*?)\\)");
+            Matcher matcher = pattern.matcher(comment);
+
+            if (!matcher.find()) {
+                return null;
+            }
+
+            String enumName = matcher.group(1);
+            String enumValuesStr = matcher.group(2);
+
+            // 解析枚举值
+            List<Map<String, String>> enumValues = new ArrayList<>();
+            String[] valuePairs = enumValuesStr.split(",");
+
+            for (String valuePair : valuePairs) {
+                String[] parts = valuePair.trim().split(":");
+                if (parts.length >= 3) {
+                    Map<String, String> enumValue = new HashMap<>();
+                    enumValue.put("name", parts[0].trim());
+                    enumValue.put("code", parts[1].trim());
+                    enumValue.put("description", parts[2].trim());
+                    enumValues.add(enumValue);
+                }
+            }
+
+            Map<String, Object> enumDefinition = new HashMap<>();
+            enumDefinition.put("enumName", enumName);
+            enumDefinition.put("enumValues", enumValues);
+            enumDefinition.put("fieldName", fieldName);
+
+            return enumDefinition;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

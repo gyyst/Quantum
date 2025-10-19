@@ -22,7 +22,7 @@ public class LoginUserResponse implements Serializable {
     /**
      * id
      */
-    private Long id;
+    private String id;
 
     /**
      * 用户角色

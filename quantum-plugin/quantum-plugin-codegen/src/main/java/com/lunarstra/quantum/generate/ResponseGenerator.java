@@ -30,6 +30,13 @@ public class ResponseGenerator implements IGenerator {
         if (!globalConfig.isEntityGenerateEnable()) {
             return;
         }
+        // 处理枚举表达式
+        List<Map<String, Object>> enumDefinitions = EntityGenerator.enumDefinitionsContext.get();
+        enumDefinitions.forEach(enumDefinition -> {
+            String enumName = enumDefinition.get("enumName").toString();
+            enumDefinition.put("enumName",
+                enumName.contains(".") ? enumName : table.buildEntityClassName() + "." + enumName);
+        });
 
         PackageConfig packageConfig = globalConfig.getPackageConfig();
         EntityConfig entityConfig = globalConfig.getEntityConfig();
@@ -48,6 +55,7 @@ public class ResponseGenerator implements IGenerator {
         params.put("packageConfig", packageConfig);
         params.put("javadocConfig", globalConfig.getJavadocConfig());
         params.put("buildImports", buildImports(table));
+        params.put("enumDefinitions", enumDefinitions);
         params.put("isBase", false);
 
         globalConfig.getTemplateConfig().getTemplate().generate(params, getTemplatePath(), entityJavaFile);
