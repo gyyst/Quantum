@@ -21,7 +21,7 @@ public class DubboProviderFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         //        SaSameUtil.checkToken(sameToken);
-
+        
         //增加分布式日志链路追踪
         String traceId = invocation.getAttachment(SystemConstant.TRACE_ID);
         MDC.put(SystemConstant.TRACE_ID, traceId);

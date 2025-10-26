@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.lunarstra.quantum.model.entity.User;
 import com.lunarstra.quantum.model.request.AddUserRequest;
 import com.lunarstra.quantum.model.request.UpdateUserRequest;
+import com.lunarstra.quantum.model.request.UserRegisterRequest;
 import com.lunarstra.quantum.model.response.LoginUserResponse;
 import com.lunarstra.quantum.model.response.UserResponse;
 
@@ -40,6 +41,29 @@ public class UserConverter {
         userResponse.setUpdateTime(user.getUpdateTime());
 
         return userResponse;
+    }
+
+    /**
+     * addRequest -> entity
+     *
+     * @return
+     */
+    public static User userRegisterRequestConvert2Entity(UserRegisterRequest userRegisterRequest) {
+        if (userRegisterRequest == null) {
+            return null;
+        }
+        User user = new User();
+
+        user.setAccount(userRegisterRequest.getAccount());
+        user.setPassword(userRegisterRequest.getPassword());
+        user.setEmail(userRegisterRequest.getEmail());
+        user.setPhone(userRegisterRequest.getPhone());
+        user.setName(userRegisterRequest.getName());
+        user.setAvatar(userRegisterRequest.getAvatar());
+        user.setProfile(userRegisterRequest.getProfile());
+        user.setState(User.UserState.NORMAL);
+
+        return user;
     }
 
     /**

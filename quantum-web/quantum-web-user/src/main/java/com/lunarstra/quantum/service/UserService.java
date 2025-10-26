@@ -65,7 +65,8 @@ public class UserService extends BaseUserService {
      * @return
      */
     public Boolean isLogin() {
-        return StpUtil.isLogin();
+        ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
+        return true;
     }
 
     /**
@@ -80,16 +81,11 @@ public class UserService extends BaseUserService {
 
         boolean isExits = userRepository.checkAccountExist(registerRequest.getAccount());
         ThrowUtils.throwIf(isExits, ErrorCode.DATA_EXITS, "账号已被占用");
-        User user = User.builder()
-            .account(registerRequest.getAccount())
-            .name(registerRequest.getName())
-            .phone(registerRequest.getPhone())
-            .avatar(registerRequest.getAvatar())
-            .email(registerRequest.getEmail())
-            .profile(registerRequest.getProfile())
-            .state(User.UserState.NORMAL)
-            .build();
+
+        User user = UserConverter.userRegisterRequestConvert2Entity(registerRequest);
+
         boolean save = userRepository.save(user);
+        ThrowUtils.throwIf(!save, ErrorCode.OPERATION_ERROR, "注册用户失败，请联系管理员!");
         return UserConverter.convertUser2LoginUserInfo(user);
     }
 
@@ -100,7 +96,6 @@ public class UserService extends BaseUserService {
      * @return
      */
     public Boolean validCodeSend(UserRegisterValidCodeSendRequest request) {
-        boolean validCodeSend = userRepository.validCodeSend(request);
-        return null;
+        return userRepository.validCodeSend(request);
     }
 }

@@ -1,23 +1,23 @@
 package com.lunarstra.quantum.repository;
 
+import com.lunarstra.quantum.cache.UserCache;
 import com.lunarstra.quantum.common.ErrorCode;
-import com.lunarstra.quantum.constant.EmailTemplate;
-import com.lunarstra.quantum.constant.RedisConstant;
 import com.lunarstra.quantum.exception.ThrowUtils;
 import com.lunarstra.quantum.mapper.UserMapper;
 import com.lunarstra.quantum.model.entity.User;
 import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest;
+import com.lunarstra.quantum.strategy.validcode.AbstractValidCodeSender;
+import com.lunarstra.quantum.strategy.validcode.ValidCodeSelector;
 import com.lunarstra.quantum.utils.RedisCache;
 import com.lunarstra.quantum.utils.SendMailUtils;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import static com.lunarstra.quantum.model.entity.table.UserTableDef.USER;
 
@@ -35,6 +35,9 @@ public class UserRepository extends ServiceImpl<UserMapper, User> {
 
     @Resource
     private RedisCache redisCache;
+
+    @Autowired
+    private UserCache userCache;
 
     /**
      * 根据用户获取account
@@ -61,21 +64,13 @@ public class UserRepository extends ServiceImpl<UserMapper, User> {
      * @return
      */
     public boolean validCodeSend(UserRegisterValidCodeSendRequest request) {
-        int validCode = new Random().nextInt(1000000);
+        String validCode = String.valueOf(new Random().nextInt(1000000));
         log.info("生成验证码:{}", validCode);
-        String target;
-        switch (request.getRegisterType()) {
-            case email -> {
-                target = request.getEmail();
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("username", null);
-                map.put("verificationUrl", null);
-                sendMailUtils.sendTemplateMail(target, EmailTemplate.REGISTER_VERIFICATION, map);
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + request.getRegisterType());
-        }
-        redisCache.setCacheObject(RedisCache.buildKey(RedisConstant.USER_REGISTER_EMAIL, target), validCode,
-            RedisConstant.USER_REGISTER_EMAIL_TTL_S, TimeUnit.SECONDS);
+        AbstractValidCodeSender validCodeSender = ValidCodeSelector.select(request.getRegisterType());
+
+        validCodeSender.sendValidCode(request.getAddress(), validCode);
+        // 缓存验证码
+        userCache.cacheValidCode(request.getAddress(), validCode);
         return true;
     }
 }

@@ -2,7 +2,6 @@ package com.lunarstra.quantum.model.request;
 
 import com.lunarstra.quantum.model.enums.RegisterEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -20,9 +19,8 @@ public class UserRegisterValidCodeSendRequest {
     private RegisterEnum registerType;
 
     /**
-     * 用户邮箱
+     * 目标地址
      */
-    @Email
-    @Schema(description = "邮箱")
-    private String email;
+    @Schema(description = "目标地址")
+    private String address;
 }
