@@ -49,7 +49,7 @@
         <knife4j.version>4.5.0</knife4j.version>
         <knife4j2.version>4.6.0</knife4j2.version>
         <springdoc.version>2.8.4</springdoc.version>
-        <spring-cloud-alibaba.version>2025.0.0.0-preview</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <docker-java.version>3.6.0</docker-java.version>
         <deepseek4j.version>1.4.7</deepseek4j.version>

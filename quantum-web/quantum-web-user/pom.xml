@@ -16,6 +16,13 @@
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.lunarstra.quantum</groupId>
+            <artifactId>quantum-common-mail</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <profiles>
         <profile>
             <id>native</id>

@@ -90,16 +90,7 @@ public class UserService extends BaseUserService {
             .state(User.UserState.NORMAL)
             .build();
         boolean save = userRepository.save(user);
-        return LoginUserResponse.builder()
-            .id(user.getId())
-            .account(user.getAccount())
-            .name(user.getName())
-            .phone(user.getPhone())
-            .avatar(user.getAvatar())
-            .email(user.getEmail())
-            .profile(user.getProfile())
-            .stateString(user.getState().getDescription())
-            .build();
+        return UserConverter.convertUser2LoginUserInfo(user);
     }
 
     /**
@@ -109,7 +100,7 @@ public class UserService extends BaseUserService {
      * @return
      */
     public Boolean validCodeSend(UserRegisterValidCodeSendRequest request) {
-
+        boolean validCodeSend = userRepository.validCodeSend(request);
         return null;
     }
 }

@@ -1,5 +1,7 @@
 package com.lunarstra.quantum.controller;
 
+import com.lunarstra.quantum.utils.SendMailUtils;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 @RestController
 public class TestController {
+    @Resource
+    private SendMailUtils sendMailUtils;
 
     @GetMapping("/hello")
     public String hello() {
+        sendMailUtils.sendMail("lantianhaian@hotmail.com", "test", "test");
         return "Hello World!";
     }
 }
