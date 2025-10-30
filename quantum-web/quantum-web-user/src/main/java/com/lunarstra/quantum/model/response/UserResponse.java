@@ -23,13 +23,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Tag(name = "接口")
 public class UserResponse implements Serializable {
-
-    /**
-     * 用户id
-     */
-    @Schema(description = "用户id")
-    private String id;
-
     /**
      * 账号
      */
@@ -37,10 +30,10 @@ public class UserResponse implements Serializable {
     private String account;
 
     /**
-     * 密码
+     * 用户id
      */
-    @Schema(description = "密码")
-    private String password;
+    @Schema(description = "用户id")
+    private String id;
 
     /**
      * 用户邮箱

@@ -1,5 +1,6 @@
 package com.lunarstra.quantum.repository;
 
+import cn.hutool.core.util.RandomUtil;
 import com.lunarstra.quantum.cache.UserCache;
 import com.lunarstra.quantum.common.ErrorCode;
 import com.lunarstra.quantum.exception.ThrowUtils;
@@ -15,8 +16,6 @@ import com.mybatisflex.spring.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-
-import java.util.Random;
 
 import static com.lunarstra.quantum.model.entity.table.UserTableDef.USER;
 
@@ -66,7 +65,7 @@ public class UserRepository extends ServiceImpl<UserMapper, User> {
      * @return
      */
     public boolean validCodeSend(UserRegisterValidCodeSendRequest request) {
-        String validCode = String.valueOf(new Random().nextInt(1000000));
+        String validCode = RandomUtil.randomNumbers(6);
         log.info("生成验证码:{}", validCode);
         // 发送验证码
         userMessageProducer.sendvalidCode(UserConverter.userRegisterRequestConvert2BO(request, validCode));

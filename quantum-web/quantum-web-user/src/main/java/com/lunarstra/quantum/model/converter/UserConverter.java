@@ -9,6 +9,7 @@ import com.lunarstra.quantum.model.request.UserRegisterRequest;
 import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest;
 import com.lunarstra.quantum.model.response.LoginUserResponse;
 import com.lunarstra.quantum.model.response.UserResponse;
+import com.lunarstra.quantum.utils.EncryptUtil;
 
 /**
  * 用户 转换类。
@@ -32,7 +33,6 @@ public class UserConverter {
 
         userResponse.setId(user.getId());
         userResponse.setAccount(user.getAccount());
-        userResponse.setPassword(user.getPassword());
         userResponse.setEmail(user.getEmail());
         userResponse.setPhone(user.getPhone());
         userResponse.setName(user.getName());
@@ -57,7 +57,7 @@ public class UserConverter {
         User user = new User();
 
         user.setAccount(userRegisterRequest.getAccount());
-        user.setPassword(userRegisterRequest.getPassword());
+        user.setPassword(EncryptUtil.encryptPassword(userRegisterRequest.getPassword()));
         user.setEmail(userRegisterRequest.getEmail());
         user.setPhone(userRegisterRequest.getPhone());
         user.setName(userRegisterRequest.getName());

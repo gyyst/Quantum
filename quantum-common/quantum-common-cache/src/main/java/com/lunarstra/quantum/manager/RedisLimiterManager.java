@@ -15,6 +15,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 /**
@@ -33,8 +35,9 @@ public class RedisLimiterManager {
         long count = annotation.count();
         String limitType = annotation.limitType();
         String key = annotation.key();
+        String userId = StpUtil.isLogin() ? StpUtil.getLoginId().toString() : "defaultUserId";
         switch (limitType) {
-            case LimitType.USER -> key = key + StpUtil.getLoginIdAsLong();
+            case LimitType.USER -> key = key + userId;
             case LimitType.IP -> key = key + getIpAddress();
             case LimitType.IP_WITH_METHOD -> key = key + getIpAddress() + ":" + StrUtil.upperFirst(method.getName());
             case LimitType.CUSTOM -> {
@@ -46,7 +49,7 @@ public class RedisLimiterManager {
             : "limit:" + annotation.redisKeyPrefix() + ":", limitType, key);
         RRateLimiter rateLimiter = redissonClient.getRateLimiter(keys);
         if (!rateLimiter.isExists()) {
-            rateLimiter.trySetRate(RateType.OVERALL, count, period, RateIntervalUnit.SECONDS);
+            rateLimiter.trySetRate(RateType.OVERALL, count, Duration.of(annotation.time(), ChronoUnit.SECONDS));
         }
         return rateLimiter.tryAcquire();
     }
