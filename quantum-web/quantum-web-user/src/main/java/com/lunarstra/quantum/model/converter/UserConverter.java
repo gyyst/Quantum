@@ -1,10 +1,12 @@
 package com.lunarstra.quantum.model.converter;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.lunarstra.quantum.model.bo.UserRegisterSendCodeBO;
 import com.lunarstra.quantum.model.entity.User;
 import com.lunarstra.quantum.model.request.AddUserRequest;
 import com.lunarstra.quantum.model.request.UpdateUserRequest;
 import com.lunarstra.quantum.model.request.UserRegisterRequest;
+import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest;
 import com.lunarstra.quantum.model.response.LoginUserResponse;
 import com.lunarstra.quantum.model.response.UserResponse;
 
@@ -130,5 +132,19 @@ public class UserConverter {
         loginUserResponse.setProfile(user.getAvatar());
         loginUserResponse.setStateString(user.getState().getDescription());
         return loginUserResponse;
+    }
+
+    public static UserRegisterSendCodeBO userRegisterRequestConvert2BO(
+        UserRegisterValidCodeSendRequest userRegisterRequest, String code) {
+
+        if (userRegisterRequest == null) {
+            return null;
+        }
+        UserRegisterSendCodeBO userRegisterSendCodeBO = new UserRegisterSendCodeBO();
+        userRegisterSendCodeBO.setRegisterEnum(userRegisterRequest.getRegisterType());
+        userRegisterSendCodeBO.setAddress(userRegisterRequest.getAddress());
+        userRegisterSendCodeBO.setCode(code);
+
+        return userRegisterSendCodeBO;
     }
 }

@@ -2,10 +2,10 @@ package com.lunarstra.quantum.config;
 
 import cn.hutool.core.util.IdUtil;
 import com.lunarstra.quantum.constant.system.SystemConstant;
+import com.lunarstra.quantum.utils.MDCUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +21,7 @@ public class LogInterceptor implements HandlerInterceptor {
         if (traceId == null) {
             traceId = IdUtil.fastSimpleUUID();
         }
-        MDC.put(SystemConstant.TRACE_ID, traceId);
+        MDCUtil.putMDC(traceId, IdUtil.fastSimpleUUID());
         return true;
     }
 
@@ -33,6 +33,7 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
         throws Exception {
-        MDC.remove(SystemConstant.TRACE_ID);
+
+        MDCUtil.clearMDC();
     }
 }

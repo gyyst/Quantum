@@ -18,6 +18,7 @@ spring:
   config:
     import:
       - optional:nacos:quantum-web.yaml?group=${spring.profiles.active}&refreshEnabled=true
+      - optional:nacos:quantum-mq.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-redis.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-mail.yaml?group=${spring.profiles.active}&refreshEnabled=true
       - optional:nacos:quantum-satoken.yaml?group=${spring.profiles.active}&refreshEnabled=true

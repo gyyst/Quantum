@@ -4,17 +4,16 @@ import com.lunarstra.quantum.cache.UserCache;
 import com.lunarstra.quantum.common.ErrorCode;
 import com.lunarstra.quantum.exception.ThrowUtils;
 import com.lunarstra.quantum.mapper.UserMapper;
+import com.lunarstra.quantum.message.producer.UserMessageProducer;
+import com.lunarstra.quantum.model.converter.UserConverter;
 import com.lunarstra.quantum.model.entity.User;
 import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest;
-import com.lunarstra.quantum.strategy.validcode.AbstractValidCodeSender;
-import com.lunarstra.quantum.strategy.validcode.ValidCodeSelector;
 import com.lunarstra.quantum.utils.RedisCache;
 import com.lunarstra.quantum.utils.SendMailUtils;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Random;
@@ -36,8 +35,11 @@ public class UserRepository extends ServiceImpl<UserMapper, User> {
     @Resource
     private RedisCache redisCache;
 
-    @Autowired
+    @Resource
     private UserCache userCache;
+
+    @Resource
+    private UserMessageProducer userMessageProducer;
 
     /**
      * 根据用户获取account
@@ -66,9 +68,8 @@ public class UserRepository extends ServiceImpl<UserMapper, User> {
     public boolean validCodeSend(UserRegisterValidCodeSendRequest request) {
         String validCode = String.valueOf(new Random().nextInt(1000000));
         log.info("生成验证码:{}", validCode);
-        AbstractValidCodeSender validCodeSender = ValidCodeSelector.select(request.getRegisterType());
-
-        validCodeSender.sendValidCode(request.getAddress(), validCode);
+        // 发送验证码
+        userMessageProducer.sendvalidCode(UserConverter.userRegisterRequestConvert2BO(request, validCode));
         // 缓存验证码
         userCache.cacheValidCode(request.getAddress(), validCode);
         return true;

@@ -13,6 +13,10 @@ public interface RabbitQueueConstant {
      */
     String USER_SEND_EMAIL = "USER.EMAIL.SEND";
     /**
+     * 用户注册邮箱发送验证码
+     */
+    String USER_SEND_CODE = "USER.EMAIL.SEND.CODE";
+    /**
      * 向用户发送硬币
      */
     String USER_SEND_COIN = "USER.SEND.COIN";
