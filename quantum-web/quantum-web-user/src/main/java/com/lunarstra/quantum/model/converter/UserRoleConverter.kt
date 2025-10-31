@@ -1,9 +1,9 @@
-package com.lunarstra.quantum.model.converter;
+package com.lunarstra.quantum.model.converter
 
-import com.lunarstra.quantum.model.entity.UserRole;
-import com.lunarstra.quantum.model.request.AddUserRoleRequest;
-import com.lunarstra.quantum.model.request.UpdateUserRoleRequest;
-import com.lunarstra.quantum.model.response.UserRoleResponse;
+import com.lunarstra.quantum.model.entity.UserRole
+import com.lunarstra.quantum.model.request.AddUserRoleRequest
+import com.lunarstra.quantum.model.request.UpdateUserRoleRequest
+import com.lunarstra.quantum.model.response.UserRoleResponse
 
 /**
  * 用户角色关系 转换类。
@@ -11,26 +11,26 @@ import com.lunarstra.quantum.model.response.UserRoleResponse;
  * @author lunarstra
  * @since 2025-10-18
  */
-
-public class UserRoleConverter {
-
+object UserRoleConverter {
     /**
      * entity -> response
      *
      * @return
      */
-    public static UserRoleResponse entityConvert2Response(UserRole userRole) {
+    @JvmStatic
+    fun entityConvert2Response(userRole: UserRole?): UserRoleResponse? {
         if (userRole == null) {
-            return null;
+            return null
         }
-        UserRoleResponse userRoleResponse = new UserRoleResponse();
+        val userRoleResponse = UserRoleResponse().apply {
 
-        userRoleResponse.setUserId(userRole.getUserId());
-        userRoleResponse.setRoleList(userRole.getRoleList());
-        userRoleResponse.setCreateTime(userRole.getCreateTime());
-        userRoleResponse.setUpdateTime(userRole.getUpdateTime());
+            userId = userRole.userId
+            roleList = userRole.roleList
+            createTime = userRole.createTime
+            updateTime = userRole.updateTime
+        }
 
-        return userRoleResponse;
+        return userRoleResponse
     }
 
     /**
@@ -38,16 +38,18 @@ public class UserRoleConverter {
      *
      * @return
      */
-    public static UserRole addRequestConvert2Entity(AddUserRoleRequest addUserRoleRequest) {
+    @JvmStatic
+    fun addRequestConvert2Entity(addUserRoleRequest: AddUserRoleRequest?): UserRole? {
         if (addUserRoleRequest == null) {
-            return null;
+            return null
         }
-        UserRole userRole = new UserRole();
+        val userRole = UserRole().apply {
 
-        userRole.setUserId(addUserRoleRequest.getUserId());
-        userRole.setRoleList(addUserRoleRequest.getRoleList());
+            userId = addUserRoleRequest.userId
+            roleList = addUserRoleRequest.roleList
+        }
 
-        return userRole;
+        return userRole
     }
 
     /**
@@ -55,15 +57,17 @@ public class UserRoleConverter {
      *
      * @return
      */
-    public static UserRole updateRequestConvert2Entity(UpdateUserRoleRequest updateUserRoleRequest) {
+    @JvmStatic
+    fun updateRequestConvert2Entity(updateUserRoleRequest: UpdateUserRoleRequest?): UserRole? {
         if (updateUserRoleRequest == null) {
-            return null;
+            return null
         }
-        UserRole userRole = new UserRole();
+        val userRole = UserRole().apply {
 
-        userRole.setUserId(updateUserRoleRequest.getUserId());
-        userRole.setRoleList(updateUserRoleRequest.getRoleList());
+            userId = updateUserRoleRequest.userId
+            roleList = updateUserRoleRequest.roleList
+        }
 
-        return userRole;
+        return userRole
     }
 }

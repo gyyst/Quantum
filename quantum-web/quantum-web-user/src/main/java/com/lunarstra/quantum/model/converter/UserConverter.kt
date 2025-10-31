@@ -1,15 +1,15 @@
-package com.lunarstra.quantum.model.converter;
+package com.lunarstra.quantum.model.converter
 
-import cn.dev33.satoken.stp.StpUtil;
-import com.lunarstra.quantum.model.bo.UserRegisterSendCodeBO;
-import com.lunarstra.quantum.model.entity.User;
-import com.lunarstra.quantum.model.request.AddUserRequest;
-import com.lunarstra.quantum.model.request.UpdateUserRequest;
-import com.lunarstra.quantum.model.request.UserRegisterRequest;
-import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest;
-import com.lunarstra.quantum.model.response.LoginUserResponse;
-import com.lunarstra.quantum.model.response.UserResponse;
-import com.lunarstra.quantum.utils.EncryptUtil;
+import cn.dev33.satoken.stp.StpUtil
+import com.lunarstra.quantum.model.bo.UserRegisterSendCodeBO
+import com.lunarstra.quantum.model.entity.User
+import com.lunarstra.quantum.model.request.AddUserRequest
+import com.lunarstra.quantum.model.request.UpdateUserRequest
+import com.lunarstra.quantum.model.request.UserRegisterRequest
+import com.lunarstra.quantum.model.request.UserRegisterValidCodeSendRequest
+import com.lunarstra.quantum.model.response.LoginUserResponse
+import com.lunarstra.quantum.model.response.UserResponse
+import com.lunarstra.quantum.utils.EncryptUtil
 
 /**
  * 用户 转换类。
@@ -17,32 +17,32 @@ import com.lunarstra.quantum.utils.EncryptUtil;
  * @author lunarstra
  * @since 2025-10-18
  */
-
-public class UserConverter {
-
+object UserConverter {
     /**
      * entity -> response
      *
      * @return
      */
-    public static UserResponse entityConvert2Response(User user) {
+    @JvmStatic
+    fun entityConvert2Response(user: User?): UserResponse? {
         if (user == null) {
-            return null;
+            return null
         }
-        UserResponse userResponse = new UserResponse();
+        val userResponse = UserResponse().apply {
 
-        userResponse.setId(user.getId());
-        userResponse.setAccount(user.getAccount());
-        userResponse.setEmail(user.getEmail());
-        userResponse.setPhone(user.getPhone());
-        userResponse.setName(user.getName());
-        userResponse.setAvatar(user.getAvatar());
-        userResponse.setProfile(user.getProfile());
-        userResponse.setState(user.getState());
-        userResponse.setCreateTime(user.getCreateTime());
-        userResponse.setUpdateTime(user.getUpdateTime());
+            id = user.id
+            account = user.account
+            email = user.email
+            phone = user.phone
+            name = user.name
+            avatar = user.avatar
+            profile = user.profile
+            state = user.state
+            createTime = user.createTime
+            updateTime = user.updateTime
+        }
 
-        return userResponse;
+        return userResponse
     }
 
     /**
@@ -50,22 +50,24 @@ public class UserConverter {
      *
      * @return
      */
-    public static User userRegisterRequestConvert2Entity(UserRegisterRequest userRegisterRequest) {
+    @JvmStatic
+    fun userRegisterRequestConvert2Entity(userRegisterRequest: UserRegisterRequest?): User? {
         if (userRegisterRequest == null) {
-            return null;
+            return null
         }
-        User user = new User();
+        val user = User().apply {
 
-        user.setAccount(userRegisterRequest.getAccount());
-        user.setPassword(EncryptUtil.encryptPassword(userRegisterRequest.getPassword()));
-        user.setEmail(userRegisterRequest.getEmail());
-        user.setPhone(userRegisterRequest.getPhone());
-        user.setName(userRegisterRequest.getName());
-        user.setAvatar(userRegisterRequest.getAvatar());
-        user.setProfile(userRegisterRequest.getProfile());
-        user.setState(User.UserState.NORMAL);
+            account = userRegisterRequest.account
+            password = EncryptUtil.encryptPassword(userRegisterRequest.password)
+            email = userRegisterRequest.email
+            phone = userRegisterRequest.phone
+            name = userRegisterRequest.name
+            avatar = userRegisterRequest.avatar
+            profile = userRegisterRequest.profile
+            state = User.UserState.NORMAL
+        }
 
-        return user;
+        return user
     }
 
     /**
@@ -73,22 +75,24 @@ public class UserConverter {
      *
      * @return
      */
-    public static User addRequestConvert2Entity(AddUserRequest addUserRequest) {
+    @JvmStatic
+    fun addRequestConvert2Entity(addUserRequest: AddUserRequest?): User? {
         if (addUserRequest == null) {
-            return null;
+            return null
         }
-        User user = new User();
+        val user = User().apply {
 
-        user.setAccount(addUserRequest.getAccount());
-        user.setPassword(addUserRequest.getPassword());
-        user.setEmail(addUserRequest.getEmail());
-        user.setPhone(addUserRequest.getPhone());
-        user.setName(addUserRequest.getName());
-        user.setAvatar(addUserRequest.getAvatar());
-        user.setProfile(addUserRequest.getProfile());
-        user.setState(addUserRequest.getState());
+            account = addUserRequest.account
+            password = addUserRequest.password
+            email = addUserRequest.email
+            phone = addUserRequest.phone
+            name = addUserRequest.name
+            avatar = addUserRequest.avatar
+            profile = addUserRequest.profile
+            state = addUserRequest.state
+        }
 
-        return user;
+        return user
     }
 
     /**
@@ -96,23 +100,25 @@ public class UserConverter {
      *
      * @return
      */
-    public static User updateRequestConvert2Entity(UpdateUserRequest updateUserRequest) {
+    @JvmStatic
+    fun updateRequestConvert2Entity(updateUserRequest: UpdateUserRequest?): User? {
         if (updateUserRequest == null) {
-            return null;
+            return null
         }
-        User user = new User();
+        val user = User().apply {
 
-        user.setId(updateUserRequest.getId());
-        user.setAccount(updateUserRequest.getAccount());
-        user.setPassword(updateUserRequest.getPassword());
-        user.setEmail(updateUserRequest.getEmail());
-        user.setPhone(updateUserRequest.getPhone());
-        user.setName(updateUserRequest.getName());
-        user.setAvatar(updateUserRequest.getAvatar());
-        user.setProfile(updateUserRequest.getProfile());
-        user.setState(updateUserRequest.getState());
+            id = updateUserRequest.id
+            account = updateUserRequest.account
+            password = updateUserRequest.password
+            email = updateUserRequest.email
+            phone = updateUserRequest.phone
+            name = updateUserRequest.name
+            avatar = updateUserRequest.avatar
+            profile = updateUserRequest.profile
+            state = updateUserRequest.state
+        }
 
-        return user;
+        return user
     }
 
     /**
@@ -121,30 +127,34 @@ public class UserConverter {
      * @param user
      * @return
      */
-    public static LoginUserResponse convertUser2LoginUserInfo(User user) {
-        LoginUserResponse loginUserResponse = new LoginUserResponse();
-        loginUserResponse.setTokenInfo(StpUtil.getTokenInfo());
-        loginUserResponse.setId(user.getId());
-        loginUserResponse.setEmail(user.getEmail());
-        loginUserResponse.setPhone(user.getPhone());
-        loginUserResponse.setName(user.getName());
-        loginUserResponse.setAvatar(user.getAvatar());
-        loginUserResponse.setProfile(user.getAvatar());
-        loginUserResponse.setStateString(user.getState().getDescription());
-        return loginUserResponse;
+    @JvmStatic
+    fun convertUser2LoginUserInfo(user: User): LoginUserResponse {
+        val loginUserResponse = LoginUserResponse().apply {
+            tokenInfo = StpUtil.getTokenInfo()
+            id = user.id
+            email = user.email
+            phone = user.phone
+            name = user.name
+            avatar = user.avatar
+            profile = user.avatar
+            stateString = user.state.description
+        }
+        return loginUserResponse
     }
 
-    public static UserRegisterSendCodeBO userRegisterRequestConvert2BO(
-        UserRegisterValidCodeSendRequest userRegisterRequest, String code) {
-
+    @JvmStatic
+    fun userRegisterRequestConvert2BO(
+        userRegisterRequest: UserRegisterValidCodeSendRequest?, code: String?
+    ): UserRegisterSendCodeBO? {
         if (userRegisterRequest == null) {
-            return null;
+            return null
         }
-        UserRegisterSendCodeBO userRegisterSendCodeBO = new UserRegisterSendCodeBO();
-        userRegisterSendCodeBO.setRegisterEnum(userRegisterRequest.getRegisterType());
-        userRegisterSendCodeBO.setAddress(userRegisterRequest.getAddress());
-        userRegisterSendCodeBO.setCode(code);
+        val userRegisterSendCodeBO = UserRegisterSendCodeBO().apply {
+            registerEnum = userRegisterRequest.registerType
+            address = userRegisterRequest.address
+            this.code = code
+        }
 
-        return userRegisterSendCodeBO;
+        return userRegisterSendCodeBO
     }
 }

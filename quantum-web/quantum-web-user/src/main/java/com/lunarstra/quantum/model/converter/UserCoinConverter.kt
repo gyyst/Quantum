@@ -1,9 +1,9 @@
-package com.lunarstra.quantum.model.converter;
+package com.lunarstra.quantum.model.converter
 
-import com.lunarstra.quantum.model.entity.UserCoin;
-import com.lunarstra.quantum.model.request.AddUserCoinRequest;
-import com.lunarstra.quantum.model.request.UpdateUserCoinRequest;
-import com.lunarstra.quantum.model.response.UserCoinResponse;
+import com.lunarstra.quantum.model.entity.UserCoin
+import com.lunarstra.quantum.model.request.AddUserCoinRequest
+import com.lunarstra.quantum.model.request.UpdateUserCoinRequest
+import com.lunarstra.quantum.model.response.UserCoinResponse
 
 /**
  * 用户硬币 转换类。
@@ -11,26 +11,26 @@ import com.lunarstra.quantum.model.response.UserCoinResponse;
  * @author lunarstra
  * @since 2025-10-18
  */
-
-public class UserCoinConverter {
-
+object UserCoinConverter {
     /**
      * entity -> response
      *
      * @return
      */
-    public static UserCoinResponse entityConvert2Response(UserCoin userCoin) {
+    @JvmStatic
+    fun entityConvert2Response(userCoin: UserCoin?): UserCoinResponse? {
         if (userCoin == null) {
-            return null;
+            return null
         }
-        UserCoinResponse userCoinResponse = new UserCoinResponse();
+        val userCoinResponse = UserCoinResponse().apply {
 
-        userCoinResponse.setUserId(userCoin.getUserId());
-        userCoinResponse.setCoinNum(userCoin.getCoinNum());
-        userCoinResponse.setCreateTime(userCoin.getCreateTime());
-        userCoinResponse.setUpdateTime(userCoin.getUpdateTime());
+            userId = userCoin.userId
+            coinNum = userCoin.coinNum
+            createTime = userCoin.createTime
+            updateTime = userCoin.updateTime
+        }
 
-        return userCoinResponse;
+        return userCoinResponse
     }
 
     /**
@@ -38,16 +38,18 @@ public class UserCoinConverter {
      *
      * @return
      */
-    public static UserCoin addRequestConvert2Entity(AddUserCoinRequest addUserCoinRequest) {
+    @JvmStatic
+    fun addRequestConvert2Entity(addUserCoinRequest: AddUserCoinRequest?): UserCoin? {
         if (addUserCoinRequest == null) {
-            return null;
+            return null
         }
-        UserCoin userCoin = new UserCoin();
+        val userCoin = UserCoin().apply {
 
-        userCoin.setUserId(addUserCoinRequest.getUserId());
-        userCoin.setCoinNum(addUserCoinRequest.getCoinNum());
+            userId = addUserCoinRequest.userId
+            coinNum = addUserCoinRequest.coinNum
+        }
 
-        return userCoin;
+        return userCoin
     }
 
     /**
@@ -55,15 +57,17 @@ public class UserCoinConverter {
      *
      * @return
      */
-    public static UserCoin updateRequestConvert2Entity(UpdateUserCoinRequest updateUserCoinRequest) {
+    @JvmStatic
+    fun updateRequestConvert2Entity(updateUserCoinRequest: UpdateUserCoinRequest?): UserCoin? {
         if (updateUserCoinRequest == null) {
-            return null;
+            return null
         }
-        UserCoin userCoin = new UserCoin();
+        val userCoin = UserCoin().apply {
 
-        userCoin.setUserId(updateUserCoinRequest.getUserId());
-        userCoin.setCoinNum(updateUserCoinRequest.getCoinNum());
+            userId = updateUserCoinRequest.userId
+            coinNum = updateUserCoinRequest.coinNum
+        }
 
-        return userCoin;
+        return userCoin
     }
 }

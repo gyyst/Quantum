@@ -1,9 +1,9 @@
-package com.lunarstra.quantum.model.converter;
+package com.lunarstra.quantum.model.converter
 
-import com.lunarstra.quantum.model.entity.UserOpenKey;
-import com.lunarstra.quantum.model.request.AddUserOpenKeyRequest;
-import com.lunarstra.quantum.model.request.UpdateUserOpenKeyRequest;
-import com.lunarstra.quantum.model.response.UserOpenKeyResponse;
+import com.lunarstra.quantum.model.entity.UserOpenKey
+import com.lunarstra.quantum.model.request.AddUserOpenKeyRequest
+import com.lunarstra.quantum.model.request.UpdateUserOpenKeyRequest
+import com.lunarstra.quantum.model.response.UserOpenKeyResponse
 
 /**
  * 用户openKey 转换类。
@@ -11,27 +11,27 @@ import com.lunarstra.quantum.model.response.UserOpenKeyResponse;
  * @author lunarstra
  * @since 2025-10-18
  */
-
-public class UserOpenKeyConverter {
-
+object UserOpenKeyConverter {
     /**
      * entity -> response
      *
      * @return
      */
-    public static UserOpenKeyResponse entityConvert2Response(UserOpenKey userOpenKey) {
+    @JvmStatic
+    fun entityConvert2Response(userOpenKey: UserOpenKey?): UserOpenKeyResponse? {
         if (userOpenKey == null) {
-            return null;
+            return null
         }
-        UserOpenKeyResponse userOpenKeyResponse = new UserOpenKeyResponse();
+        val userOpenKeyResponse = UserOpenKeyResponse().apply {
 
-        userOpenKeyResponse.setUserId(userOpenKey.getUserId());
-        userOpenKeyResponse.setAccessKey(userOpenKey.getAccessKey());
-        userOpenKeyResponse.setSecretKey(userOpenKey.getSecretKey());
-        userOpenKeyResponse.setCreateTime(userOpenKey.getCreateTime());
-        userOpenKeyResponse.setUpdateTime(userOpenKey.getUpdateTime());
+            userId = userOpenKey.userId
+            accessKey = userOpenKey.accessKey
+            secretKey = userOpenKey.secretKey
+            createTime = userOpenKey.createTime
+            updateTime = userOpenKey.updateTime
+        }
 
-        return userOpenKeyResponse;
+        return userOpenKeyResponse
     }
 
     /**
@@ -39,17 +39,20 @@ public class UserOpenKeyConverter {
      *
      * @return
      */
-    public static UserOpenKey addRequestConvert2Entity(AddUserOpenKeyRequest addUserOpenKeyRequest) {
+    @JvmStatic
+    fun addRequestConvert2Entity(addUserOpenKeyRequest: AddUserOpenKeyRequest?): UserOpenKey? {
         if (addUserOpenKeyRequest == null) {
-            return null;
+            return null
         }
-        UserOpenKey userOpenKey = new UserOpenKey();
+        val userOpenKey = UserOpenKey().apply {
+            userId = addUserOpenKeyRequest.userId
+            accessKey = addUserOpenKeyRequest.accessKey
+            secretKey = addUserOpenKeyRequest.secretKey
+        }
 
-        userOpenKey.setUserId(addUserOpenKeyRequest.getUserId());
-        userOpenKey.setAccessKey(addUserOpenKeyRequest.getAccessKey());
-        userOpenKey.setSecretKey(addUserOpenKeyRequest.getSecretKey());
 
-        return userOpenKey;
+
+        return userOpenKey
     }
 
     /**
@@ -57,16 +60,18 @@ public class UserOpenKeyConverter {
      *
      * @return
      */
-    public static UserOpenKey updateRequestConvert2Entity(UpdateUserOpenKeyRequest updateUserOpenKeyRequest) {
+    @JvmStatic
+    fun updateRequestConvert2Entity(updateUserOpenKeyRequest: UpdateUserOpenKeyRequest?): UserOpenKey? {
         if (updateUserOpenKeyRequest == null) {
-            return null;
+            return null
         }
-        UserOpenKey userOpenKey = new UserOpenKey();
+        val userOpenKey = UserOpenKey().apply {
+            userId = updateUserOpenKeyRequest.userId
+            accessKey = updateUserOpenKeyRequest.accessKey
+            secretKey = updateUserOpenKeyRequest.secretKey
 
-        userOpenKey.setUserId(updateUserOpenKeyRequest.getUserId());
-        userOpenKey.setAccessKey(updateUserOpenKeyRequest.getAccessKey());
-        userOpenKey.setSecretKey(updateUserOpenKeyRequest.getSecretKey());
+        }
 
-        return userOpenKey;
+        return userOpenKey
     }
 }
