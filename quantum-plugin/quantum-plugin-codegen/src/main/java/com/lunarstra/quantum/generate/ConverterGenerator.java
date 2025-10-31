@@ -14,7 +14,7 @@ public class ConverterGenerator implements IGenerator {
 
     @Override
     public String getTemplatePath() {
-        return "template/converter.tpl";
+        return "template/converter.kt.tpl";
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ConverterGenerator implements IGenerator {
 
         String entityPackagePath = (packageConfig.getBasePackage() + ".model.converter").replace(".", "/");
         File entityJavaFile = new File(packageConfig.getSourceDir(),
-            entityPackagePath + "/" + table.buildEntityClassName() + "Converter" + ".java");
+            entityPackagePath + "/" + table.buildEntityClassName() + "Converter" + ".kt");
 
         if (entityJavaFile.exists() && !entityConfig.isOverwriteEnable()) {
             return;
