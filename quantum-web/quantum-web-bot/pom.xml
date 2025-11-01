@@ -34,4 +34,95 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                    </args>
+                    <compilerPlugins>
+                        <plugin>spring</plugin>
+                        <plugin>lombok</plugin>
+                        <!--                        <plugin>jpa</plugin>-->
+                        <plugin>all-open</plugin>
+                        <plugin>no-arg</plugin>
+                    </compilerPlugins>
+
+                    <pluginOptions>
+                        <!--                        <option>all-open:annotation=javax.persistence.Entity</option>-->
+                        <!--                        <option>all-open:annotation=javax.persistence.Embeddable</option>-->
+                        <!--                        <option>all-open:annotation=javax.persistence.MappedSuperclass</option>-->
+                        <!--                        <pluginOption>no-arg:annotation=</pluginOption>-->
+                        <!--                        <pluginOption>all-open:annotation=</pluginOption>-->
+                    </pluginOptions>
+                </configuration>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>25</source>
+                    <target>25</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.42</version>
+                        </path>
+                        <path>
+                            <groupId>com.mybatis-flex</groupId>
+                            <artifactId>mybatis-flex-processor</artifactId>
+                            <version>${mybatisflex.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
