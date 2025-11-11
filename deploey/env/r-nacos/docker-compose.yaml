@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  nacos:
+    image: qingpan/rnacos:v0.7.4
+    container_name: rnacos
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "10848:10848"
+    volumes:
+      - /var/nacos/io:/io:rw
+    restart: unless-stopped

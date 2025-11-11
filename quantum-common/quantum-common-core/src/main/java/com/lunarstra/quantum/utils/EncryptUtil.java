@@ -28,17 +28,6 @@ public class EncryptUtil {
         return AES.encryptHex(context);
     }
 
-    //    public static void main(String[] args) {
-    //        //        String encryptBase64 = AES.encryptBase64("12345678");
-    //        //        System.out.println(encryptBase64);
-    //        //        String decryptStr = AES.decryptStr(encryptBase64);
-    //        //        System.out.println(decryptStr);
-    //        //        System.out.println(encryptUserPassword("12345678"));
-    //        String encryptBySM4 = encryptPassword("12345678");
-    //        System.out.println(encryptBySM4);
-    //        //        System.out.println(decryptBySM4(encryptBySM4));
-    //    }
-
     /**
      * 如果是密文ENC(*)则先取出密文
      *
