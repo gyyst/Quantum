@@ -1,0 +1,79 @@
+name: rNacos Backup
+
+on:
+  schedule:
+    # 每天凌晨2点执行备份 (UTC时间)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup OpenSSL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssl
+          
+      - name: Create backup directory
+        run: mkdir -p deploey/backup/nacos/rnacos/backup
+        
+      - name: Generate backup filename with timestamp
+        id: filename
+        run: |
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          BACKUP_FILENAME="rnacos_backup_${TIMESTAMP}.data"
+          echo "backup_filename=$BACKUP_FILENAME" >> $GITHUB_OUTPUT
+          echo "encrypted_filename=${BACKUP_FILENAME}.enc" >> $GITHUB_OUTPUT
+          
+      - name: Download rNacos backup data
+        run: |
+          curl -o "backup/${{ steps.filename.outputs.backup_filename }}" \
+            "${{ secrets.RNACOS_BACKUP_URL }}"
+            
+      - name: Encrypt backup file
+        run: |
+          # 使用GitHub Actions secrets中的加密密码
+          ENCRYPTION_KEY="${{ secrets.AES_ENCRYPTION_KEY }}"
+          if [ -z "$ENCRYPTION_KEY" ]; then
+            # 如果没有设置密钥，使用默认密钥
+            ENCRYPTION_KEY="Quantum_rNacos_Backup_2024"
+          fi
+          
+          # 使用AES-256-CBC加密
+          openssl enc -aes-256-cbc -salt -in "backup/${{ steps.filename.outputs.backup_filename }}" \
+            -out "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}" \
+            -pass pass:"$ENCRYPTION_KEY"
+            
+      - name: Clean up old backups (keep last 7 days)
+        run: |
+          # 列出所有备份文件并按时间排序
+          cd deploey/backup/nacos/rnacos/backup
+          ls -t *.enc | tail -n +8 | xargs -r rm
+          
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add deploey/backup/nacos/rnacos/backup/
+          
+          # 检查是否有变更需要提交
+          if git diff --staged --quiet; then
+            echo "No new backup to commit"
+          else
+            git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          fi
+          
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rnacos-backup-${{ steps.filename.outputs.backup_filename }}
+          path: deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}
+          retention-days: 7
