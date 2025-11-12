@@ -47,7 +47,7 @@ jobs:
           fi
           
           # 使用AES-256-CBC加密
-          openssl enc -aes-256-cbc -salt -in "backup/${{ steps.filename.outputs.backup_filename }}" \
+          openssl enc -aes-256-cbc -salt -in "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
             -out "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}" \
             -pass pass:"$ENCRYPTION_KEY"
 
