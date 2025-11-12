@@ -50,6 +50,7 @@ jobs:
           openssl enc -aes-256-cbc -salt -in "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
             -out "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}" \
             -pass pass:"$ENCRYPTION_KEY"
+          rm -rf "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}"
 
       - name: Clean up old backups (keep last 7 days)
         run: |
