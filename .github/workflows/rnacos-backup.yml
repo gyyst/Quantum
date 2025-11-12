@@ -15,6 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # 检出backup分支
+          ref: backup
+          # 获取完整历史记录，确保能够推送到backup分支
+          fetch-depth: 0
 
       - name: Setup OpenSSL
         run: |
@@ -69,7 +74,8 @@ jobs:
             echo "No new backup to commit"
           else
             git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
-            git push
+            # 推送到backup分支
+            git push origin backup
           fi
 
       - name: Upload backup artifact

@@ -33,7 +33,22 @@
 
 > **注意**：如果不设置 `AES_ENCRYPTION_KEY`，系统将使用默认密钥，安全性较低。
 
-### 2. 启用工作流
+### 2. 创建backup分支
+
+在首次使用备份功能前，需要创建一个名为`backup`的分支：
+
+1. 在本地仓库中执行：
+   ```bash
+   git checkout -b backup
+   git push -u origin backup
+   ```
+
+2. 或者在GitHub网页上创建新分支：
+   - 进入仓库页面
+   - 点击分支下拉菜单
+   - 输入"backup"并创建新分支
+
+### 3. 启用工作流
 
 工作流文件已创建在 `.github/workflows/rnacos-backup.yml`，默认情况下会：
 
@@ -43,7 +58,7 @@
 ### 3. 备份文件位置
 
 备份文件将保存在以下位置：
-- 仓库内：`backup/nacos/rnacos/backup/`
+- backup分支内：`deploey/backup/nacos/rnacos/backup/`
 - 文件命名格式：`rnacos_backup_YYYYMMDD_HHMMSS.data.enc`
 
 ## 工作流详解
@@ -53,7 +68,7 @@
 1. **下载备份数据**：从通过Secrets配置的rNacos备份API地址下载数据
 2. **生成时间戳**：创建带有时间戳的备份文件名
 3. **加密文件**：使用 AES-256-CBC 算法加密备份文件
-4. **上传到仓库**：将加密后的文件提交到仓库的指定目录
+4. **上传到仓库**：将加密后的文件提交到backup分支的指定目录
 5. **清理旧备份**：删除超过7天的旧备份文件
 6. **保存为工件**：将备份文件保存为 GitHub Actions 工件，保留7天
 
