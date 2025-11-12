@@ -34,7 +34,7 @@ jobs:
           
       - name: Download rNacos backup data
         run: |
-          curl -o "backup/${{ steps.filename.outputs.backup_filename }}" \
+          curl -o "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
             "${{ secrets.RNACOS_BACKUP_URL }}"
             
       - name: Encrypt backup file
