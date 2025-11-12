@@ -1,4 +1,4 @@
-name: rNacos Backup
+name: R-Nacos Backup
 
 on:
   schedule:
@@ -11,19 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Setup OpenSSL
         run: |
           sudo apt-get update
           sudo apt-get install -y openssl
-          
+
       - name: Create backup directory
         run: mkdir -p deploey/backup/nacos/rnacos/backup
-        
+
       - name: Generate backup filename with timestamp
         id: filename
         run: |
@@ -31,12 +31,12 @@ jobs:
           BACKUP_FILENAME="rnacos_backup_${TIMESTAMP}.data"
           echo "backup_filename=$BACKUP_FILENAME" >> $GITHUB_OUTPUT
           echo "encrypted_filename=${BACKUP_FILENAME}.enc" >> $GITHUB_OUTPUT
-          
+
       - name: Download rNacos backup data
         run: |
           curl -o "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
             "${{ secrets.RNACOS_BACKUP_URL }}"
-            
+
       - name: Encrypt backup file
         run: |
           # 使用GitHub Actions secrets中的加密密码
@@ -50,13 +50,13 @@ jobs:
           openssl enc -aes-256-cbc -salt -in "backup/${{ steps.filename.outputs.backup_filename }}" \
             -out "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}" \
             -pass pass:"$ENCRYPTION_KEY"
-            
+
       - name: Clean up old backups (keep last 7 days)
         run: |
           # 列出所有备份文件并按时间排序
           cd deploey/backup/nacos/rnacos/backup
           ls -t *.enc | tail -n +8 | xargs -r rm
-          
+
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
@@ -70,7 +70,7 @@ jobs:
             git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
             git push
           fi
-          
+
       - name: Upload backup artifact
         uses: actions/upload-artifact@v4
         with:
