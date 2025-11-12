@@ -16,10 +16,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # 检出backup分支
-          ref: backup
-          # 获取完整历史记录，确保能够推送到backup分支
+          # 获取完整历史记录，确保能够合并分支
           fetch-depth: 0
+
+      - name: Merge main branch into backup branch
+        run: |
+          # 检出backup分支，如果不存在则创建
+          git checkout -b backup origin/backup || git checkout backup
+          
+          # 合并main分支到backup分支
+          git merge origin/main --no-edit -m "Merge main into backup for rNacos backup"
 
       - name: Setup OpenSSL
         run: |
