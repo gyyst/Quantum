@@ -2,51 +2,46 @@ name: R-Nacos Backup
 
 on:
   schedule:
-    # 每天凌晨2点执行备份 (UTC时间)
     - cron: '0 2 * * *'
-  workflow_dispatch: # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   backup:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # 关键修复：移除 workflows 权限（因为不需要修改工作流）
+      # workflows: write  # ❌ 请删除此权限
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # 获取完整历史记录
           fetch-depth: 0
-          # 确保获取所有分支
-          ref: '*'
 
       - name: Merge main branch into backup branch
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 确保获取所有远程分支
-          git fetch --all
-          
-          # 安全检出 backup 分支（不存在时基于 main 创建）
-          if git show-ref --quiet refs/heads/backup; then
-            git checkout backup
-          else
+          # 确保 backup 分支存在
+          if ! git show-ref --quiet refs/heads/backup; then
             git checkout -b backup origin/main
-            echo "Created new backup branch from main"
+          else
+            git checkout backup
           fi
           
-          # 方法 1：使用 merge 策略（推荐）
-          # 预定义合并策略：.github/ 目录永远保留 backup 分支版本
-          echo ".github merge=ours" > .git/info/attributes
+          # 1. 备份 .github 目录（临时保存）
+          mkdir -p .github-backup
+          cp -r .github/. .github-backup/
           
-          # 执行合并（自动应用预定义策略）
-          git merge origin/main --no-edit -m "Merge main into backup (preserve .github/)" --no-ff || true
+          # 2. 合并 main 分支（忽略 .github 目录）
+          git merge origin/main --no-edit -m "Merge main into backup" -X theirs --no-ff || true
           
-          # 方法 2：合并后恢复（备用方案，已注释）
-          # git merge origin/main --no-edit -m "Merge main into backup" --no-ff -X theirs || true
-          # git checkout HEAD@{1} -- .github/  # 恢复合并前的 .github/ 内容
+          # 3. 恢复 .github 目录（确保不被覆盖）
+          rm -rf .github
+          cp -r .github-backup/. .github/
+          rm -rf .github-backup
 
       - name: Setup OpenSSL
         run: |
@@ -56,7 +51,7 @@ jobs:
       - name: Create backup directory
         run: mkdir -p deploey/backup/nacos/rnacos/backup
 
-      - name: Generate backup filename with timestamp
+      - name: Generate backup filename
         id: filename
         run: |
           TIMESTAMP=$(date +%Y%m%d_%H%M%S)
@@ -80,36 +75,23 @@ jobs:
             -pass pass:"$ENCRYPTION_KEY"
           rm -f "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}"
 
-      - name: Clean up old backups (keep last 7 days)
+      - name: Clean up old backups
         run: |
           cd deploey/backup/nacos/rnacos/backup
-          # 按修改时间排序，删除第8个及之后的文件
           ls -t *.enc 2>/dev/null | tail -n +8 | xargs -r rm
 
-      - name: Commit and push changes
+      - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 仅添加备份文件，忽略其他变更
+          # 只提交备份文件（不包含 .github 目录）
           git add deploey/backup/nacos/rnacos/backup/
           
-          # 检查是否有备份文件变更
           if git diff --staged --quiet; then
-            echo "✅ No new backup to commit"
+            echo "No new backup to commit"
             exit 0
           fi
           
-          # 提交时明确排除 .github/ 的变更
-          git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')" -- .
-          
-          # 强制推送确保 .github/ 不被覆盖（安全操作）
-          git push --force-with-lease origin backup
-
-      - name: Upload backup artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: rnacos-backup-${{ steps.filename.outputs.backup_filename }}
-          path: deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}
-          retention-days: 7
+          git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin backup
