@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      # 关键修复：移除 workflows 权限（因为不需要修改工作流）
-      # workflows: write  # ❌ 请删除此权限
 
     steps:
       - name: Checkout repository
@@ -24,21 +22,17 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 确保 backup 分支存在
           if ! git show-ref --quiet refs/heads/backup; then
             git checkout -b backup origin/main
           else
             git checkout backup
           fi
           
-          # 1. 备份 .github 目录（临时保存）
           mkdir -p .github-backup
           cp -r .github/. .github-backup/
           
-          # 2. 合并 main 分支（忽略 .github 目录）
           git merge origin/main --no-edit -m "Merge main into backup" -X theirs --no-ff || true
           
-          # 3. 恢复 .github 目录（确保不被覆盖）
           rm -rf .github
           cp -r .github-backup/. .github/
           rm -rf .github-backup
@@ -51,7 +45,7 @@ jobs:
       - name: Create backup directory
         run: mkdir -p deploey/backup/nacos/rnacos/backup
 
-      - name: Generate backup filename
+      - name: Generate backup filename with timestamp
         id: filename
         run: |
           TIMESTAMP=$(date +%Y%m%d_%H%M%S)
@@ -75,17 +69,16 @@ jobs:
             -pass pass:"$ENCRYPTION_KEY"
           rm -f "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}"
 
-      - name: Clean up old backups
+      - name: Clean up old backups (keep last 7 days)
         run: |
           cd deploey/backup/nacos/rnacos/backup
           ls -t *.enc 2>/dev/null | tail -n +8 | xargs -r rm
 
-      - name: Commit and push
+      - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 只提交备份文件（不包含 .github 目录）
           git add deploey/backup/nacos/rnacos/backup/
           
           if git diff --staged --quiet; then
@@ -94,4 +87,13 @@ jobs:
           fi
           
           git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
-          git push origin backup
+          # ✅ 关键修复：使用 --force-with-lease
+          git push --force-with-lease origin backup
+
+      - name: Upload backup artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rnacos-backup-${{ steps.filename.outputs.backup_filename }}
+          path: deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}
+          retention-days: 7
