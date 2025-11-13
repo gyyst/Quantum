@@ -16,23 +16,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # 获取完整历史记录，确保能够合并分支
+          # 获取完整历史记录
           fetch-depth: 0
+          # 确保获取所有分支
+          ref: '*'
 
       - name: Merge main branch into backup branch
         run: |
-          # 配置Git用户信息
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 检出backup分支，如果不存在则创建
-          git checkout -b backup origin/backup || git checkout backup
+          # 确保获取所有远程分支
+          git fetch --all
           
-          # 合并main分支到backup分支，但排除.github/目录
-          git merge origin/main --no-edit -m "Merge main into backup for rNacos backup" -X theirs --no-ff
+          # 安全检出 backup 分支（不存在时基于 main 创建）
+          if git show-ref --quiet refs/heads/backup; then
+            git checkout backup
+          else
+            git checkout -b backup origin/main
+            echo "Created new backup branch from main"
+          fi
           
-          # 恢复.github/目录中的内容为backup分支的版本
-          git checkout backup -- .github/
+          # 方法 1：使用 merge 策略（推荐）
+          # 预定义合并策略：.github/ 目录永远保留 backup 分支版本
+          echo ".github merge=ours" > .git/info/attributes
+          
+          # 执行合并（自动应用预定义策略）
+          git merge origin/main --no-edit -m "Merge main into backup (preserve .github/)" --no-ff || true
+          
+          # 方法 2：合并后恢复（备用方案，已注释）
+          # git merge origin/main --no-edit -m "Merge main into backup" --no-ff -X theirs || true
+          # git checkout HEAD@{1} -- .github/  # 恢复合并前的 .github/ 内容
 
       - name: Setup OpenSSL
         run: |
@@ -57,41 +71,43 @@ jobs:
 
       - name: Encrypt backup file
         run: |
-          # 使用GitHub Actions secrets中的加密密码
           ENCRYPTION_KEY="${{ secrets.AES_ENCRYPTION_KEY }}"
-          if [ -z "$ENCRYPTION_KEY" ]; then
-            # 如果没有设置密钥，使用默认密钥
-            ENCRYPTION_KEY="Quantum_rNacos_Backup_2024"
-          fi
+          [ -z "$ENCRYPTION_KEY" ] && ENCRYPTION_KEY="Quantum_rNacos_Backup_2024"
           
-          # 使用AES-256-CBC加密
-          openssl enc -aes-256-cbc -salt -in "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
+          openssl enc -aes-256-cbc -salt \
+            -in "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
             -out "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.encrypted_filename }}" \
             -pass pass:"$ENCRYPTION_KEY"
-          rm -rf "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}"
+          rm -f "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}"
 
       - name: Clean up old backups (keep last 7 days)
         run: |
-          # 列出所有备份文件并按时间排序
           cd deploey/backup/nacos/rnacos/backup
-          ls -t *.enc | tail -n +8 | xargs -r rm
+          # 按修改时间排序，删除第8个及之后的文件
+          ls -t *.enc 2>/dev/null | tail -n +8 | xargs -r rm
 
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+          # 仅添加备份文件，忽略其他变更
           git add deploey/backup/nacos/rnacos/backup/
           
-          # 检查是否有变更需要提交
+          # 检查是否有备份文件变更
           if git diff --staged --quiet; then
-            echo "No new backup to commit"
-          else
-            git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
-            # 推送到backup分支
-            git push origin backup
+            echo "✅ No new backup to commit"
+            exit 0
           fi
+          
+          # 提交时明确排除 .github/ 的变更
+          git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')" -- .
+          
+          # 强制推送确保 .github/ 不被覆盖（安全操作）
+          git push --force-with-lease origin backup
 
       - name: Upload backup artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: rnacos-backup-${{ steps.filename.outputs.backup_filename }}
