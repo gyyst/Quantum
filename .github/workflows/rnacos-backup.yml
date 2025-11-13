@@ -53,7 +53,7 @@ jobs:
           echo "backup_filename=$BACKUP_FILENAME" >> $GITHUB_OUTPUT
           echo "encrypted_filename=${BACKUP_FILENAME}.enc" >> $GITHUB_OUTPUT
 
-      - name: Download rNacos backup data
+      - name: Download r-nacos backup data
         run: |
           curl -o "deploey/backup/nacos/rnacos/backup/${{ steps.filename.outputs.backup_filename }}" \
             "${{ secrets.RNACOS_BACKUP_URL }}"
@@ -86,7 +86,7 @@ jobs:
             exit 0
           fi
           
-          git commit -m "Add rNacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
+          git commit -m "Add r-nacos backup - $(date +'%Y-%m-%d %H:%M:%S')"
           # ✅ 关键修复：使用 --force-with-lease
           git push --force-with-lease origin backup
 
