@@ -28,8 +28,11 @@ jobs:
           # 检出backup分支，如果不存在则创建
           git checkout -b backup origin/backup || git checkout backup
           
-          # 合并main分支到backup分支
-          git merge origin/main --no-edit -m "Merge main into backup for rNacos backup"
+          # 合并main分支到backup分支，但排除.github/目录
+          git merge origin/main --no-edit -m "Merge main into backup for rNacos backup" -X theirs --no-ff
+          
+          # 恢复.github/目录中的内容为backup分支的版本
+          git checkout backup -- .github/
 
       - name: Setup OpenSSL
         run: |
